@@ -1,0 +1,10 @@
+{
+  "name": "Yuque plugin",
+  "description": "A Chrome extension that can make Yuque more powerful",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "notifications"
+  ]
+}
