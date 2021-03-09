@@ -7,3 +7,6 @@
 
 # packages
 node_modules
+
+# log
+yarn-error.log
