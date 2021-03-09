@@ -1,21 +1,11 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const resolvePath = relativePath => path.resolve(__dirname, relativePath);
 
 module.exports = {
-  mode: 'development',
-  entry: resolvePath('../src/index.ts'),
-  output: {
-    library: 'AHSVideo',
-    libraryExport: 'default',
-    filename: 'ahs-video.min.js',
-    path: resolvePath('../dev')
-  },
-  watch: true,
-  watchOptions: {
-    ignored: ['node_modules/**', 'dev/**', 'scripts/**', 'lib/**']
-  },
+  mode: 'production',
+  entry: resolvePath('../src/index.tsx'),
   module: {
     rules: [
       {
@@ -56,12 +46,13 @@ module.exports = {
       }
     ]
   },
-  resolve: { extensions: ['.ts'] },
-  plugins: [
-    new HtmlWebpackPlugin({
-      inject: 'head',
-      scriptLoading: 'blocking',
-      template: resolvePath('../public/index.html')
-    })
-  ]
+  resolve: { extensions: ['.tsx', '.ts'] }
+  // plugins: [
+  //   new CleanWebpackPlugin({
+  //     cleanAfterEveryBuildPatterns: [
+  //       resolvePath('../lib/video.d.ts'),
+  //       resolvePath('../lib/utils.d.ts')
+  //     ]
+  //   })
+  // ]
 };
