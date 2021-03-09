@@ -4,7 +4,29 @@
   "version": "1.0",
   "manifest_version": 3,
   "permissions": [
+    "tabs",
     "storage",
+    "activeTab",
+    "scripting",
     "notifications"
-  ]
+  ],
+  "options_page": "options.html",
+  "background": {
+    "scripts": "background.js"
+  },
+  "actions": {
+    "default_popup": "popup.html",
+    "default_icons": {
+      "16": "images/yuque_16.png",
+      "32": "images/yuque_32.png",
+      "48": "images/yuque_48.png",
+      "128": "images/yuque_128.png"
+    }
+  },
+  "icons": {
+    "16": "images/yuque_16.png",
+    "32": "images/yuque_32.png",
+    "48": "images/yuque_48.png",
+    "128": "images/yuque_128.png"
+  }
 }
