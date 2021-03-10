@@ -1,11 +1,11 @@
 const path = require('path');
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const resolvePath = relativePath => path.resolve(__dirname, relativePath);
+const resolve = relativePath => path.resolve(__dirname, relativePath);
 
 module.exports = {
   mode: 'production',
-  entry: resolvePath('../src/index.tsx'),
+  entry: resolve('../src/index.tsx'),
   module: {
     rules: [
       {
@@ -14,7 +14,7 @@ module.exports = {
           {
             loader: 'ts-loader',
             options: {
-              configFile: resolvePath('../tsconfig.json')
+              configFile: resolve('../tsconfig.json')
             }
           }
         ]
@@ -46,7 +46,15 @@ module.exports = {
       }
     ]
   },
-  resolve: { extensions: ['.tsx', '.ts'] }
+  optimization: {
+    usedExports: true
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      '@': resolve('../src')
+    }
+  }
   // plugins: [
   //   new CleanWebpackPlugin({
   //     cleanAfterEveryBuildPatterns: [
