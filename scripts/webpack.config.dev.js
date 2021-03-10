@@ -84,8 +84,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: resolve('../public/index.html'),
-      favicon: resolve('../src/images/yuque_32.png')
+      template: resolve('../public/index.html')
     }),
     new MiniCssExtractPlugin(),
     new FriendlyErrorsWebpackPlugin({
@@ -96,7 +95,7 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         { from: resolve('../manifest.json'), to: resolve('../dist'), toType: 'dir' },
-        { from: resolve('../src/images'), to: resolve('../dist/images'), toType: 'dir' }
+        { from: resolve('../images'), to: resolve('../dist/images'), toType: 'dir' }
       ]
     })
   ],
