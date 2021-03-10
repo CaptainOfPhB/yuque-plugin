@@ -1,3 +1,44 @@
-.yuque-plugin__menu-container {
+.yuque-plugin__popup-container {
+  padding: 10px 10px 0;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  font-size: 12px;
+}
+
+.yuque-plugin__setting {
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.yuque-plugin__icon-setting {
+  width: 18px;
+  cursor: pointer;
+}
+
+.yuque-plugin__icon-feedback {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.yuque-plugin__menu-item {
+  margin: 10px 0;
+  padding: 0 10px;
+  height: 35px;
+  width: 150px;
+  cursor: pointer;
+  line-height: 35px;
+  border-radius: 2px;
+  background-color: #f1f1f1;
+  box-shadow: 0 0 2px #f1f1f2;
+
+  &:hover {
+    color: #25b864;
+    outline: 1px solid #25b864;
+  }
 }

@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { ConfigProvider } from 'antd';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import { renderRoutes } from 'react-router-config';
-import { Switch, BrowserRouter } from 'react-router-dom';
+import { Switch, HashRouter } from 'react-router-dom';
 
 import routes from '@/router';
 
@@ -21,11 +21,11 @@ function getPopupContainer(trigger: HTMLElement | null) {
 function App() {
   return (
     <ConfigProvider locale={zh_CN} getPopupContainer={getPopupContainer}>
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           {renderRoutes(routes)}
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     </ConfigProvider>
   );
 }
