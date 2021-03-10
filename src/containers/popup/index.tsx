@@ -1,9 +1,13 @@
 import React from 'react';
 import { Button } from 'antd';
 
+import './popup.less';
+
 function Popup() {
   return (
-    <Button>click me</Button>
+    <div className='yuque-plugin__popup-container'>
+      <Button>click me</Button>
+    </div>
   );
 }
 

@@ -1,11 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom';
 import { ConfigProvider } from 'antd';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import { renderRoutes } from 'react-router-config';
 import { Switch, BrowserRouter } from 'react-router-dom';
 
 import routes from '@/router';
+
+if (process.env.NODE_ENV === 'development') {
+  require('antd/dist/antd.css');
+}
 
 function getPopupContainer(trigger: HTMLElement | null) {
   if (trigger) {
