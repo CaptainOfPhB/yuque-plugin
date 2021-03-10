@@ -10,7 +10,7 @@
     "scripting",
     "notifications"
   ],
-  "actions": {
+  "action": {
     "default_popup": "index.html",
     "default_icons": {
       "16": "images/yuque_16.png",
