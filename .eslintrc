@@ -1,6 +1,10 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "project": "./tsconfig.json"
+  },
   "plugins": [
     "prettier",
     "react",
@@ -47,21 +51,31 @@
       "error",
       "as-needed"
     ],
+    "require-await": [
+      "error"
+    ],
     "newline-per-chained-call": [
       "error",
       {
         "ignoreChainWithDepth": 3
       }
     ],
-    "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
         "ignoreRestSiblings": true
       }
     ],
-    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-function-return-type": [
+      "error"
+    ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-non-null-assertion": "off"
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-floating-promises": [
+      "error"
+    ],
+    "@typescript-eslint/no-misused-promises": [
+      "error"
+    ]
   }
 }
