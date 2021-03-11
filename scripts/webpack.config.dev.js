@@ -13,11 +13,15 @@ const messages = `Build success, now you can follow the steps below:
       2. Open ${chalk.green('developer mode')} on upper right conner
       3. Click the ${chalk.green('load unpacked')} button in the upper left conner 
       4. Select the ${chalk.green('dist')} dir under this project
+      5. After you edit code, just click ${chalk.green('reload')} icon on Yuque extension card
 `;
 
 module.exports = {
   mode: 'development',
-  entry: resolve('../src/index.tsx'),
+  entry: {
+    main: resolve('../src/index.tsx'),
+    background: resolve('../src/background.ts')
+  },
   output: {
     path: resolve('../dist')
   },
