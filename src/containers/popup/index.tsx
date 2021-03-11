@@ -10,14 +10,26 @@ import Menu from '@/config/menu';
 import * as actions from '@/actions';
 import isYuquePage from '@/utils/isYuquePage';
 
-const isYuque = isYuquePage();
-
 function Popup() {
-  const onClickMenu = React.useCallback((type: Type) => {
+  const [isYuque, setIsYuque] = React.useState<boolean>(false);
+
+  const memoizedIsYuquePage = React.useCallback(async () => {
+    const isYuque = await isYuquePage();
+    setIsYuque(isYuque);
+  }, []);
+
+  React.useEffect(() => void memoizedIsYuquePage(), []);
+
+  const onClickMenu = React.useCallback(async (type: Type, disabled: boolean) => {
+    if (disabled) return;
+
     switch (type) {
-      case Type.Markdown: {
-        void actions.viewMarkdown();
-      }
+      case Type.Markdown:
+        await actions.viewMarkdown();
+        break;
+      case Type.Url:
+        await actions.copyUrl();
+        break;
     }
   }, []);
 
@@ -35,8 +47,10 @@ function Popup() {
       </div>
       <div className='yuque-plugin__menu'>
         {Menu.map(item => {
+          const disabled = !item.runOnAnyPage && !isYuque;
+          const className = 'yuque-plugin__menu-item'.concat(disabled ? ' disabled' : '');
           return item.visible ? (
-            <div key={item.type} className='yuque-plugin__menu-item' onClick={onClickMenu.bind(null, item.type)}>
+            <div key={item.type} className={className} onClick={onClickMenu.bind(null, item.type, disabled)}>
               {item.title}
             </div>
           ) : null;

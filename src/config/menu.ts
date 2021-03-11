@@ -2,6 +2,12 @@ import { MenuItem, Type } from '@/interface';
 
 const Menu: MenuItem[] = [
   {
+    type: Type.Url,
+    title: '复制当前页面 URL',
+    runOnAnyPage: true,
+    visible: true
+  },
+  {
     type: Type.Markdown,
     title: '查看 Markdown 结构',
     runOnAnyPage: false,
@@ -11,12 +17,6 @@ const Menu: MenuItem[] = [
     type: Type.Html,
     title: '查看 HTML 结构',
     runOnAnyPage: false,
-    visible: true
-  },
-  {
-    type: Type.Url,
-    title: '复制当前页面 URL',
-    runOnAnyPage: true,
     visible: true
   },
   {
