@@ -1,0 +1,6 @@
+dist
+public
+scripts
+node_modules
+
+.eslintrc
