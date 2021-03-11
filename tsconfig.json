@@ -15,6 +15,13 @@
         "src/*"
       ]
     },
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "strictFunctionTypes": true,
     "sourceMap": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
