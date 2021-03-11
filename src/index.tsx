@@ -22,15 +22,10 @@ function App() {
   return (
     <ConfigProvider locale={zh_CN} getPopupContainer={getPopupContainer}>
       <HashRouter>
-        <Switch>
-          {renderRoutes(routes)}
-        </Switch>
+        <Switch>{renderRoutes(routes)}</Switch>
       </HashRouter>
     </ConfigProvider>
   );
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+ReactDOM.render(<App />, document.getElementById('root'));

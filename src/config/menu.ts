@@ -1,90 +1,90 @@
-interface MenuItem {
-  type: string;
-  title: string;
-  visible: boolean;
-}
+import { MenuItem, Type } from '@/interface';
 
-const menu: MenuItem[] = [
+const Menu: MenuItem[] = [
   {
-    type: 'markdown',
+    type: Type.Markdown,
     title: '查看 Markdown 结构',
+    runOnAnyPage: false,
     visible: true
   },
   {
-    type: 'html',
+    type: Type.Html,
     title: '查看 HTML 结构',
+    runOnAnyPage: false,
     visible: true
   },
   {
-    type: 'url',
+    type: Type.Url,
     title: '复制当前页面 URL',
+    runOnAnyPage: true,
     visible: true
   },
   {
-    type: 'image',
+    type: Type.Image,
     title: '插入随机图片（Bing）',
+    runOnAnyPage: false,
     visible: true
   },
   {
-    type: 'markdown',
+    type: Type.Indent,
     title: '首行缩进',
+    runOnAnyPage: false,
     visible: false
   },
   {
-    type: 'markdown',
+    type: Type.Format,
     title: '文本格式化',
+    runOnAnyPage: false,
     visible: false
   },
   {
-    type: 'markdown',
+    type: Type.Directory,
     title: '复制目录列表',
+    runOnAnyPage: false,
     visible: false
   },
   {
-    type: 'markdown',
+    type: Type.MindMapping,
     title: '生成思维导图',
+    runOnAnyPage: false,
     visible: false
   },
   {
-    type: 'markdown',
+    type: Type.SerialNumber,
     title: '生成编号',
+    runOnAnyPage: false,
     visible: false
   },
   {
-    type: 'markdown',
+    type: Type.Save,
     title: '网页转存',
+    runOnAnyPage: false,
     visible: false
   },
   {
-    type: 'markdown',
+    type: Type.Diary,
     title: '日记',
+    runOnAnyPage: false,
     visible: false
   },
   {
-    type: 'markdown',
-    title: '配置',
-    visible: false
-  },
-  {
-    type: 'markdown',
-    title: '帮助&反馈',
-    visible: false
-  },
-  {
-    type: 'markdown',
+    type: Type.Tooltip,
     title: '插入提示框',
+    runOnAnyPage: false,
     visible: false
   },
   {
-    type: 'markdown',
+    type: Type.Header,
     title: '插入彩色标题头',
+    runOnAnyPage: false,
     visible: false
   },
   {
-    type: 'markdown',
+    type: Type.Emoji,
     title: '插入表情',
+    runOnAnyPage: false,
     visible: false
   }
 ];
 
-export default menu;
+export default Menu;
