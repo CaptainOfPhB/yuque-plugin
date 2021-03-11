@@ -8,8 +8,12 @@
     "storage",
     "activeTab",
     "scripting",
+    "contextMenus",
     "notifications"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_popup": "index.html",
     "default_icons": {
