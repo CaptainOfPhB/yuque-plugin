@@ -3,9 +3,24 @@ import { MenuItem, Type } from '@/interface';
 const Menu: MenuItem[] = [
   {
     type: Type.Url,
-    title: '复制当前页面 URL',
+    title: '复制当前页面链接',
+    contexts: ['all'],
     runOnAnyPage: true,
     visible: true
+  },
+  {
+    type: Type.Image,
+    title: '复制图片链接',
+    contexts: ['link', 'image'],
+    runOnAnyPage: false,
+    visible: false
+  },
+  {
+    type: Type.Link,
+    title: '复制链接地址',
+    contexts: ['link', 'image'],
+    runOnAnyPage: false,
+    visible: false
   },
   {
     type: Type.Markdown,
@@ -20,7 +35,7 @@ const Menu: MenuItem[] = [
     visible: true
   },
   {
-    type: Type.Image,
+    type: Type.Insert,
     title: '插入随机图片（Bing）',
     runOnAnyPage: false,
     visible: true

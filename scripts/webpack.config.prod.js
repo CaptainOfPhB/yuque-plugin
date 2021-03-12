@@ -59,7 +59,7 @@ module.exports = {
   //   new CleanWebpackPlugin({
   //     cleanAfterEveryBuildPatterns: [
   //       resolvePath('../lib/video.d.ts'),
-  //       resolvePath('../lib/utils.d.ts')
+  //       resolvePath('../lib/helper.d.ts')
   //     ]
   //   })
   // ]

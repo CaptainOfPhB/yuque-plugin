@@ -7,8 +7,8 @@ import setting from '@/assets/setting.png';
 import feedback from '@/assets/feedback.png';
 
 import Menu from '@/config/menu';
-import * as actions from '@/actions';
-import isYuquePage from '@/utils/isYuquePage';
+import * as actions from '@/actions/popup';
+import isYuquePage from '@/helper/isYuquePage';
 
 function Popup() {
   const [isYuque, setIsYuque] = React.useState<boolean>(false);

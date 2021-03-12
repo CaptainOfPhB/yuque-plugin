@@ -21,7 +21,7 @@ module.exports = {
   mode: 'development',
   entry: {
     main: resolve('../src/index.tsx'),
-    background: resolve('../src/background.ts')
+    background: resolve('../src/background/index.ts')
   },
   output: {
     path: resolve('../dist')

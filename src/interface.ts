@@ -3,15 +3,33 @@ export interface MenuItem {
   title: string;
   visible: boolean;
   runOnAnyPage: boolean;
+  contexts?: ContextType[];
 }
+
+export type ContextType =
+  | 'all'
+  | 'page'
+  | 'frame'
+  | 'selection'
+  | 'link'
+  | 'editable'
+  | 'image'
+  | 'video'
+  | 'audio'
+  | 'launcher'
+  | 'browser_action'
+  | 'page_action'
+  | 'action';
 
 export enum Type {
   Url = 'url',
   Html = 'html',
   Save = 'save',
+  Link = 'link',
   Diary = 'diary',
   Emoji = 'emoji',
   Image = 'image',
+  Insert = 'insert',
   Header = 'header',
   Indent = 'indent',
   Format = 'format',
