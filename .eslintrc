@@ -51,9 +51,6 @@
       "error",
       "as-needed"
     ],
-    "require-await": [
-      "error"
-    ],
     "newline-per-chained-call": [
       "error",
       {
@@ -76,6 +73,11 @@
     ],
     "@typescript-eslint/no-misused-promises": [
       "error"
-    ]
+    ],
+    "@typescript-eslint/promise-function-async": [
+      "error"
+    ],
+    "require-await": "off",
+    "@typescript-eslint/require-await": "error"
   }
 }
