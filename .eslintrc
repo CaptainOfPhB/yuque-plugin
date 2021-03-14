@@ -69,12 +69,23 @@
       "error"
     ],
     "@typescript-eslint/no-misused-promises": [
-      "error"
+      "error",
+      {
+        "checksVoidReturn": false
+      }
     ],
     "@typescript-eslint/promise-function-async": [
       "error"
     ],
     "require-await": "off",
-    "@typescript-eslint/require-await": "error"
+    "@typescript-eslint/require-await": "error",
+    "@typescript-eslint/triple-slash-reference": [
+      "error",
+      {
+        "path": "always",
+        "types": "always",
+        "lib": "always"
+      }
+    ]
   }
 }
