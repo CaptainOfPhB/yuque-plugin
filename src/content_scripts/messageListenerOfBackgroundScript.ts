@@ -1,12 +1,7 @@
-import { RequestHandler, Type } from '@/interface';
-
+import { Type } from '@/interface';
 import { copyUrl, viewMarkdown } from '@/actions';
 
-chrome.runtime.onMessage.addListener(function (request: RequestHandler, _sender, sendResponse) {
-  if (request.disabled) return;
-
-  const response: unknown | undefined = undefined;
-
+chrome.runtime.onMessage.addListener(function handleContextMenuClick(request: { type: Type }) {
   switch (request.type) {
     case Type.Url:
       copyUrl();
@@ -14,9 +9,5 @@ chrome.runtime.onMessage.addListener(function (request: RequestHandler, _sender,
     case Type.Markdown:
       viewMarkdown();
       break;
-  }
-
-  if (sendResponse) {
-    sendResponse(response);
   }
 });

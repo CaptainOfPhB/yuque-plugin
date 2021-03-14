@@ -1,9 +1,8 @@
 import Menu from '@/config/menu';
-import { Type } from '@/interface';
-import { isYuquePage } from '@/helper';
+import { MessageOfRequestCreateContextMenu, Type } from '@/interface';
 
-chrome.runtime.onMessage.addListener(function dynamicallyCreateContextMenu(message: 'createContextMenu') {
-  if (message !== 'createContextMenu') return;
+chrome.runtime.onMessage.addListener(function dynamicallyCreateContextMenu(message: MessageOfRequestCreateContextMenu) {
+  if (message.action !== 'createContextMenu') return;
 
   chrome.contextMenus.removeAll(function createContextMenu() {
     chrome.contextMenus.create({
@@ -18,7 +17,7 @@ chrome.runtime.onMessage.addListener(function dynamicallyCreateContextMenu(messa
         title: item.title,
         contexts: item.contexts,
         parentId: 'yuque-plugin',
-        visible: item.onlyRunOnYuquePage ? isYuquePage() : true
+        visible: item.onlyRunOnYuquePage ? message.isYuquePage : true
       });
     }
 
@@ -41,10 +40,12 @@ chrome.runtime.onMessage.addListener(function dynamicallyCreateContextMenu(messa
       contexts: ['all'],
       parentId: 'yuque-plugin'
     });
+  });
 
-    chrome.contextMenus.onClicked.addListener(function handleContextMenuClick(info, tab) {
+  if (!chrome.contextMenus.onClicked.hasListeners()) {
+    chrome.contextMenus.onClicked.addListener(function sendMessage(info, tab) {
       const type = info.menuItemId as Type;
       chrome.tabs.sendMessage(tab!.id!, { type });
     });
-  });
+  }
 });

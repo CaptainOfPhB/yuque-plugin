@@ -1,11 +1,9 @@
 /**
  * Get url of the current tab with markdown format
- * @return {Promise<string>}
+ * @return {string}
  */
-async function getMarkdownUrlOfCurrentTab(): Promise<string> {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  const { url, title } = tab;
-  return `[${title}](${url})`;
+function getMarkdownUrlOfCurrentTab(): string {
+  return `[${document.title}](${location.href})`;
 }
 
 export default getMarkdownUrlOfCurrentTab;

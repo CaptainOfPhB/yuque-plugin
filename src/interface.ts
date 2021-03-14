@@ -1,9 +1,8 @@
 export interface MenuItem {
   type: Type;
   title: string;
-  visible: boolean;
-  runOnAnyPage: boolean;
   contexts?: ContextType[];
+  onlyRunOnYuquePage?: boolean;
 }
 
 export type ContextType =
@@ -40,4 +39,9 @@ export enum Type {
   Directory = 'directory',
   MindMapping = 'mind-mapping',
   SerialNumber = 'serial-number'
+}
+
+export interface MessageOfRequestCreateContextMenu {
+  isYuquePage: boolean;
+  action: 'createContextMenu';
 }
