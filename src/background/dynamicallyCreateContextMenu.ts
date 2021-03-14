@@ -1,10 +1,10 @@
 import Menu from '@/config/menu';
 import { Type } from '@/interface';
-import handleContextMenuClick from '@/background/handleContextMenuClick';
+import { isYuquePage } from '@/helper';
 
-// remove menu first if created
-// reference: https://stackoverflow.com/a/37000388
-chrome.runtime.onInstalled.addListener(function removeContextMenu() {
+chrome.runtime.onMessage.addListener(function dynamicallyCreateContextMenu(message: 'createContextMenu') {
+  if (message !== 'createContextMenu') return;
+
   chrome.contextMenus.removeAll(function createContextMenu() {
     chrome.contextMenus.create({
       id: 'yuque-plugin',
@@ -17,7 +17,8 @@ chrome.runtime.onInstalled.addListener(function removeContextMenu() {
         id: item.type,
         title: item.title,
         contexts: item.contexts,
-        parentId: 'yuque-plugin'
+        parentId: 'yuque-plugin',
+        visible: item.onlyRunOnYuquePage ? isYuquePage() : true
       });
     }
 
@@ -41,6 +42,9 @@ chrome.runtime.onInstalled.addListener(function removeContextMenu() {
       parentId: 'yuque-plugin'
     });
 
-    chrome.contextMenus.onClicked.addListener(handleContextMenuClick);
+    chrome.contextMenus.onClicked.addListener(function handleContextMenuClick(info, tab) {
+      const type = info.menuItemId as Type;
+      chrome.tabs.sendMessage(tab!.id!, { type });
+    });
   });
 });
