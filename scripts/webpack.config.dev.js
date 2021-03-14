@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const EslintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
@@ -21,7 +22,8 @@ module.exports = {
   mode: 'development',
   entry: {
     main: resolve('../src/index.tsx'),
-    background: resolve('../src/background/index.ts')
+    background: resolve('../src/background/index.ts'),
+    content_scripts: resolve('../src/content_scripts/index.ts')
   },
   output: {
     path: resolve('../dist')
@@ -87,8 +89,14 @@ module.exports = {
       '@': resolve('../src')
     }
   },
+  stats: 'errors-only',
+  performance: {
+    hints: false
+  },
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
+      chunks: ['main'],
       template: resolve('../public/index.html')
     }),
     new MiniCssExtractPlugin(),
@@ -104,12 +112,9 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         { from: resolve('../manifest.json'), to: resolve('../dist'), toType: 'dir' },
-        { from: resolve('../images'), to: resolve('../dist/images'), toType: 'dir' }
+        { from: resolve('../src/images'), to: resolve('../dist/images'), toType: 'dir' },
+        { from: resolve('../src/vendors'), to: resolve('../dist/vendors'), toType: 'dir' }
       ]
     })
-  ],
-  stats: 'errors-only',
-  performance: {
-    hints: false
-  }
+  ]
 };
