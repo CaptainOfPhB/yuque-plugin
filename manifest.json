@@ -9,13 +9,27 @@
     "activeTab",
     "scripting",
     "contextMenus",
-    "notifications"
+    "clipboardWrite"
   ],
   "background": {
     "service_worker": "background.js"
   },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "vendors/noty/noty.min.css"
+      ],
+      "js": [
+        "vendors/noty/noty.min.js",
+        "content_scripts.js"
+      ]
+    }
+  ],
   "action": {
-    "default_popup": "index.html",
     "default_icons": {
       "16": "images/yuque_16.png",
       "32": "images/yuque_32.png",
