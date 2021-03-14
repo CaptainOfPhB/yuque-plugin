@@ -40,12 +40,12 @@ chrome.runtime.onMessage.addListener(function dynamicallyCreateContextMenu(messa
       contexts: ['all'],
       parentId: 'yuque-plugin'
     });
-  });
 
-  if (!chrome.contextMenus.onClicked.hasListeners()) {
-    chrome.contextMenus.onClicked.addListener(function sendMessage(info, tab) {
-      const type = info.menuItemId as Type;
-      chrome.tabs.sendMessage(tab!.id!, { type });
-    });
-  }
+    if (!chrome.contextMenus.onClicked.hasListeners()) {
+      chrome.contextMenus.onClicked.addListener(function sendMessage(info, tab) {
+        const type = info.menuItemId as Type;
+        chrome.tabs.sendMessage(tab!.id!, { type });
+      });
+    }
+  });
 });
