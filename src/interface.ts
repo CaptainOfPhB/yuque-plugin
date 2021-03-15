@@ -41,7 +41,7 @@ export enum Type {
   SerialNumber = 'serial-number'
 }
 
-export interface MessageOfRequestCreateContextMenu {
+export interface RequestCreateContextMenu {
   isYuquePage: boolean;
   action: 'createContextMenu';
 }
