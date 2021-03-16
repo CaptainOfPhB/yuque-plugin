@@ -14,15 +14,23 @@ chrome.runtime.onMessage.addListener(function messageListener(
         title: 'Yuque plugin - 语雀插件'
       });
 
-      for (const item of Menu) {
-        chrome.contextMenus.create({
-          id: item.type,
-          title: item.title,
-          contexts: item.contexts,
-          parentId: 'yuque-plugin',
-          visible: item.onlyRunOnYuquePage ? message.isYuquePage : true
-        });
-      }
+      Menu.forEach((item, index) => {
+        if (item.type === Type.Separator) {
+          chrome.contextMenus.create({
+            type: 'separator',
+            id: 'separator' + index,
+            parentId: 'yuque-plugin'
+          });
+        } else {
+          chrome.contextMenus.create({
+            id: item.type,
+            title: item.title,
+            contexts: item.contexts,
+            parentId: 'yuque-plugin',
+            visible: item.onlyRunOnYuquePage ? message.isYuquePage : true
+          });
+        }
+      });
 
       chrome.contextMenus.create({
         id: 'separator',
@@ -48,7 +56,7 @@ chrome.runtime.onMessage.addListener(function messageListener(
         chrome.contextMenus.onClicked.addListener(function sendMessage(info, tab) {
           console.log('yuque-plugin: trigger click event');
           const type = info.menuItemId as Type;
-          chrome.tabs.sendMessage(tab!.id!, { type });
+          chrome.tabs.sendMessage(tab!.id!, { type, info });
         });
       }
     });
