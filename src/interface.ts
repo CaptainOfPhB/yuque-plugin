@@ -1,6 +1,6 @@
 export interface MenuItem {
   type: Type;
-  title: string;
+  title?: string;
   contexts?: ContextType[];
   onlyRunOnYuquePage?: boolean;
 }
@@ -21,24 +21,25 @@ export type ContextType =
   | 'action';
 
 export enum Type {
-  Url = 'url',
-  Html = 'html',
-  Save = 'save',
-  Link = 'link',
-  Diary = 'diary',
-  Emoji = 'emoji',
-  Image = 'image',
-  Insert = 'insert',
-  Header = 'header',
-  Indent = 'indent',
-  Format = 'format',
-  Setting = 'setting',
-  Tooltip = 'tooltip',
-  Feedback = 'feedback',
-  Markdown = 'markdown',
-  Directory = 'directory',
-  MindMapping = 'mind-mapping',
-  SerialNumber = 'serial-number'
+  Url = 'url', // 复制页面链接
+  Html = 'html', // 查看 HTML 结构
+  Save = 'save', //网页转存
+  Link = 'link', //复制链接
+  Diary = 'diary', //日记
+  Emoji = 'emoji', //插入表情
+  Image = 'image', // 复制图片
+  Insert = 'insert', // 插入随机图片
+  Header = 'header', // 插入彩色标题头
+  Indent = 'indent', //首行缩进
+  Format = 'format', //文本格式化
+  Setting = 'setting', //设置
+  Tooltip = 'tooltip', // 插入提示框
+  Feedback = 'feedback', //帮助和反馈
+  Markdown = 'markdown', //查看 Markdown 结构
+  Separator = 'separator',
+  Directory = 'directory', // 查看目录列表
+  MindMapping = 'mind-mapping', // 生成思维导图
+  SerialNumber = 'serial-number' // 生成序列号
 }
 
 export interface RequestCreateContextMenu {
