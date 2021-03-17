@@ -1,3 +1,5 @@
+import OnClickData = chrome.contextMenus.OnClickData;
+
 export interface MenuItem {
   type: Type;
   title?: string;
@@ -42,7 +44,12 @@ export enum Type {
   SerialNumber = 'serial-number' // 生成序列号
 }
 
-export interface RequestCreateContextMenu {
+export interface RequestFromContentScript {
   isYuquePage: boolean;
   action: 'createContextMenu';
+}
+
+export interface RequestFromBackgroundScript {
+  type: Type;
+  info: OnClickData;
 }

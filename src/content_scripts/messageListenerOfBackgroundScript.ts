@@ -1,15 +1,13 @@
-import { Type } from '@/interface';
 import MessageSender = chrome.runtime.MessageSender;
-import OnClickData = chrome.contextMenus.OnClickData;
+import { RequestFromBackgroundScript, Type } from '@/interface';
+
 import { copyUrl, copyImage, viewMarkdown } from '@/actions';
 
 chrome.runtime.onMessage.addListener(function handleContextMenuClick(
-  request: { type: Type; info: OnClickData },
+  request: RequestFromBackgroundScript,
   _sender: MessageSender,
   sendResponse
 ) {
-  console.log('yuque-plugin: receive message');
-
   switch (request.type) {
     case Type.Url:
       copyUrl();

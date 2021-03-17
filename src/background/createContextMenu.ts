@@ -1,12 +1,16 @@
 import Menu from '@/config/menu';
-import { RequestCreateContextMenu, Type } from '@/interface';
+
+import Tab = chrome.tabs.Tab;
+import MessageSender = chrome.runtime.MessageSender;
+import OnClickData = chrome.contextMenus.OnClickData;
+import { MenuItem, RequestFromContentScript, Type } from '@/interface';
 
 chrome.runtime.onMessage.addListener(function messageListener(
-  message: RequestCreateContextMenu,
-  _sender,
+  request: RequestFromContentScript,
+  _sender: MessageSender,
   sendResponse
 ) {
-  if (message.action === 'createContextMenu') {
+  if (request.action === 'createContextMenu') {
     chrome.contextMenus.removeAll(function createContextMenu() {
       chrome.contextMenus.create({
         id: 'yuque-plugin',
@@ -14,7 +18,7 @@ chrome.runtime.onMessage.addListener(function messageListener(
         title: 'Yuque plugin - 语雀插件'
       });
 
-      Menu.forEach((item, index) => {
+      Menu.forEach((item: MenuItem, index: number) => {
         if (item.type === Type.Separator) {
           chrome.contextMenus.create({
             type: 'separator',
@@ -27,7 +31,7 @@ chrome.runtime.onMessage.addListener(function messageListener(
             title: item.title,
             contexts: item.contexts,
             parentId: 'yuque-plugin',
-            visible: item.onlyRunOnYuquePage ? message.isYuquePage : true
+            visible: item.onlyRunOnYuquePage ? request.isYuquePage : true
           });
         }
       });
@@ -51,16 +55,13 @@ chrome.runtime.onMessage.addListener(function messageListener(
         contexts: ['all'],
         parentId: 'yuque-plugin'
       });
-
-      if (!chrome.contextMenus.onClicked.hasListeners()) {
-        chrome.contextMenus.onClicked.addListener(function sendMessage(info, tab) {
-          console.log('yuque-plugin: trigger click event');
-          const type = info.menuItemId as Type;
-          chrome.tabs.sendMessage(tab!.id!, { type, info });
-        });
-      }
     });
   }
 
   sendResponse();
+});
+
+chrome.contextMenus.onClicked.addListener(function sendMessage(info: OnClickData, tab: Tab | undefined) {
+  const type = info.menuItemId as Type;
+  chrome.tabs.sendMessage(tab!.id!, { type, info });
 });
