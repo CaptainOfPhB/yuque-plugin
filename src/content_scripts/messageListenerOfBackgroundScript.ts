@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
 ) {
   switch (request.type) {
     case Type.Url:
-      copyUrl();
+      await copyUrl();
       break;
     case Type.Link:
       await copyLink(request.info);
