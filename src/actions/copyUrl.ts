@@ -1,13 +1,10 @@
-import copyToClipboard from '@/helper/copyToClipboard';
-import getMarkdownUrlOfCurrentTab from '@/helper/getMarkdownUrlOfCurrentTab';
-
 /**
  * Copy the current page url to markdown format
- * @returns {Promise<string>}
+ * @returns {Promise<void>}
  */
-function copyUrl(): void {
-  const markdownLink = getMarkdownUrlOfCurrentTab();
-  copyToClipboard(markdownLink);
+async function copyUrl(): Promise<void> {
+  const markdownLink = `[${document.title}](${location.href})`;
+  await navigator.clipboard.writeText(markdownLink);
   new Noty({
     type: 'success',
     text: '已复制页面链接至粘贴板！'

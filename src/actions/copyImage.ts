@@ -1,12 +1,13 @@
-import { copyToClipboard } from '@/helper';
 import OnClickData = chrome.contextMenus.OnClickData;
 
 /**
  * Copy the image url to markdown format
- * @returns {Promise<string>}
+ * @param {chrome.contextMenus.OnClickData} info
+ * @returns {Promise<void>}
  */
-function copyImage(info: OnClickData): void {
-  copyToClipboard(`![image](${info.srcUrl})`);
+async function copyImage(info: OnClickData): Promise<void> {
+  const markdownLink = `![image](${info.srcUrl})`;
+  await navigator.clipboard.writeText(markdownLink);
   new Noty({
     type: 'success',
     text: '已复制图片链接至粘贴板！'

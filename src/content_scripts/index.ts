@@ -1,7 +1,7 @@
 import './overrideNotyConfiguration';
 import './messageListenerOfBackgroundScript';
 
-import { isYuquePage } from '@/helper';
+import isYuquePage from '@/helper/isYuquePage';
 import { RequestFromContentScript } from '@/interface';
 
 chrome.runtime.sendMessage({
