@@ -24,7 +24,7 @@ export type ContextType =
 
 export enum Type {
   Url = 'url', // 复制页面链接
-  Html = 'html', // 查看 HTML 结构
+  HTML = 'html', // 查看 HTML 结构
   Save = 'save', //网页转存
   Link = 'link', //复制链接
   Diary = 'diary', //日记

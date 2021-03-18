@@ -1,7 +1,12 @@
 import MessageSender = chrome.runtime.MessageSender;
 import { RequestFromBackgroundScript, Type } from '@/interface';
 
-import { copyUrl, copyLink, copyImage, viewMarkdown } from '@/actions';
+import copyUrl from '@/actions/copyUrl';
+import copyLink from '@/actions/copyLink';
+import viewHTML from '@/actions/viewHTML';
+import copyImage from '@/actions/copyImage';
+import viewMarkdown from '@/actions/viewMarkdown';
+import insertRandomImage from '@/actions/insertRandomImage';
 
 chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
   request: RequestFromBackgroundScript,
@@ -20,6 +25,12 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       break;
     case Type.Markdown:
       viewMarkdown();
+      break;
+    case Type.HTML:
+      viewHTML();
+      break;
+    case Type.Insert:
+      insertRandomImage();
       break;
   }
 

@@ -3,7 +3,7 @@ import isArticlePage from '@/helper/isArticlePage';
 /**
  * View markdown structure of Yuque article page
  */
-function viewMarkdown() {
+function viewHTML() {
   if (!isArticlePage()) {
     return new Noty({
       type: 'error',
@@ -11,7 +11,7 @@ function viewMarkdown() {
     }).show();
   }
   const [url] = window.location.href.split('/edit');
-  window.open(url.concat('/markdown?plain=true&linebreak=false&anchor=false'), '_blank');
+  window.open(url.concat('/html'), '_blank');
 }
 
-export default viewMarkdown;
+export default viewHTML;

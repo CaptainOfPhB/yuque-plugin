@@ -26,7 +26,7 @@ const Menu: MenuItem[] = [
     contexts: ['all']
   },
   {
-    type: Type.Html,
+    type: Type.HTML,
     title: '查看 HTML 结构',
     onlyRunOnYuquePage: true,
     contexts: ['all']
