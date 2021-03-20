@@ -1,5 +1,6 @@
 import underEditing from '@/helper/underEditing';
 import isArticlePage from '@/helper/isArticlePage';
+import randomIdentifier from '@/helper/randomIdentifier';
 import isCursorFocusedOnEditor from '@/helper/isCursorFocusedOnEditor';
 
 function insertRandomImage() {
@@ -22,12 +23,20 @@ function insertRandomImage() {
     }).show();
   }
 
-  const selection = document.getSelection()!;
-  const parentElement = selection.focusNode!.parentElement!;
+  const p = document.createElement('p');
   const img = document.createElement('img');
-  img.src = 'https://bing.ioliu.cn/v1/rand?t=' + new Date().getTime().toString();
-  img.alt = 'random image from Bing';
-  parentElement.appendChild(img);
+  p.setAttribute('data-lake-id', randomIdentifier(32));
+  img.setAttribute('src', 'https://bing.ioliu.cn/v1/rand?t=' + new Date().getTime().toString());
+  img.setAttribute('alt', 'random image from Bing');
+  p.appendChild(img);
+
+  const focusNode = document.getSelection()!.focusNode;
+  let parentElement = focusNode as HTMLElement;
+  const topElement = document.querySelector('.lake-content-editor-core');
+  while (!parentElement.getAttribute('data-lake-id') && parentElement.parentElement !== topElement) {
+    parentElement = parentElement.parentElement!;
+  }
+  topElement!.insertBefore(p, parentElement.nextSibling);
 }
 
 export default insertRandomImage;
