@@ -24,18 +24,22 @@ function insertRandomImage() {
   }
 
   const p = document.createElement('p');
-  const img = document.createElement('img');
   p.setAttribute('data-lake-id', randomIdentifier(32));
-  img.setAttribute('src', 'https://bing.ioliu.cn/v1/rand?t=' + new Date().getTime().toString());
+
+  const img = document.createElement('img');
   img.setAttribute('alt', 'random image from Bing');
+  img.setAttribute('src', 'https://bing.ioliu.cn/v1/rand?t=' + new Date().getTime().toString());
+
   p.appendChild(img);
 
   const focusNode = document.getSelection()!.focusNode;
-  let parentElement = focusNode as HTMLElement;
   const topElement = document.querySelector('.lake-content-editor-core');
+
+  let parentElement = focusNode as HTMLElement;
   while (!parentElement.getAttribute('data-lake-id') && parentElement.parentElement !== topElement) {
     parentElement = parentElement.parentElement!;
   }
+
   topElement!.insertBefore(p, parentElement.nextSibling);
 }
 
