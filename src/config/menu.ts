@@ -17,7 +17,8 @@ const Menu: MenuItem[] = [
     contexts: ['link']
   },
   {
-    type: Type.Separator
+    type: Type.Separator,
+    contexts: ['all']
   },
   {
     type: Type.Markdown,
@@ -32,7 +33,8 @@ const Menu: MenuItem[] = [
     contexts: ['all']
   },
   {
-    type: Type.Separator
+    type: Type.Separator,
+    contexts: ['all']
   },
   {
     type: Type.Insert,
@@ -83,7 +85,8 @@ const Menu: MenuItem[] = [
     contexts: ['all']
   },
   {
-    type: Type.Separator
+    type: Type.Separator,
+    contexts: ['all']
   },
   {
     type: Type.Tooltip,

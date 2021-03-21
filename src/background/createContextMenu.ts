@@ -21,8 +21,9 @@ chrome.runtime.onMessage.addListener(function messageListener(
       Menu.forEach((item: MenuItem, index: number) => {
         if (item.type === Type.Separator) {
           chrome.contextMenus.create({
-            type: 'separator',
-            id: 'separator' + index,
+            type: item.type,
+            id: item.type + index,
+            contexts: item.contexts,
             parentId: 'yuque-plugin'
           });
         } else {
@@ -38,6 +39,7 @@ chrome.runtime.onMessage.addListener(function messageListener(
 
       chrome.contextMenus.create({
         id: 'separator',
+        contexts: ['all'],
         type: 'separator',
         parentId: 'yuque-plugin'
       });
