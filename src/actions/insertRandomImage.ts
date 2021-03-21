@@ -26,18 +26,22 @@ function insertRandomImage() {
   const p = document.createElement('p');
   p.setAttribute('data-lake-id', randomIdentifier(32));
 
+  const span = document.createElement('span');
+  p.classList.add('lake-fontsize-11');
+
   const img = document.createElement('img');
   img.setAttribute('alt', 'random image from Bing');
   img.setAttribute('src', 'https://bing.ioliu.cn/v1/rand?t=' + new Date().getTime().toString());
 
-  p.appendChild(img);
+  span.appendChild(img);
+  p.appendChild(span);
 
   const focusNode = document.getSelection()!.focusNode;
   const topElement = document.querySelector('.lake-content-editor-core');
 
-  let parentElement = focusNode as HTMLElement;
-  while (!parentElement.getAttribute('data-lake-id') && parentElement.parentElement !== topElement) {
-    parentElement = parentElement.parentElement!;
+  let parentElement = focusNode?.parentElement;
+  while (!parentElement?.getAttribute('data-lake-id') && parentElement?.parentElement !== topElement) {
+    parentElement = parentElement?.parentElement || null;
   }
 
   topElement!.insertBefore(p, parentElement.nextSibling);
