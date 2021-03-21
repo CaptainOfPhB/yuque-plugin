@@ -7,6 +7,7 @@ import viewHTML from '@/actions/viewHTML';
 import copyImage from '@/actions/copyImage';
 import viewMarkdown from '@/actions/viewMarkdown';
 import insertRandomImage from '@/actions/insertRandomImage';
+import indentTheFirstLineOfParagraph from '@/actions/indentTheFirstLineOfParagraph';
 
 chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
   request: RequestFromBackgroundScript,
@@ -31,6 +32,9 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       break;
     case Type.Insert:
       insertRandomImage();
+      break;
+    case Type.Indent:
+      indentTheFirstLineOfParagraph();
       break;
   }
 

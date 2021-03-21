@@ -3,6 +3,9 @@ import isArticlePage from '@/helper/isArticlePage';
 import randomIdentifier from '@/helper/randomIdentifier';
 import isCursorFocusedOnEditor from '@/helper/isCursorFocusedOnEditor';
 
+/**
+ * Insert an random image from Bing
+ */
 function insertRandomImage() {
   if (!isArticlePage()) {
     return new Noty({
