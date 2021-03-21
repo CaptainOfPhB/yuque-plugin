@@ -1,6 +1,5 @@
 import underEditing from '@/helper/underEditing';
 import isArticlePage from '@/helper/isArticlePage';
-import randomIdentifier from '@/helper/randomIdentifier';
 import isCursorFocusedOnEditor from '@/helper/isCursorFocusedOnEditor';
 
 /**
@@ -26,18 +25,9 @@ function insertRandomImage() {
     }).show();
   }
 
-  const p = document.createElement('p');
-  p.setAttribute('data-lake-id', randomIdentifier(32));
-
-  const span = document.createElement('span');
-  p.classList.add('lake-fontsize-11');
-
   const img = document.createElement('img');
   img.setAttribute('alt', 'random image from Bing');
   img.setAttribute('src', 'https://bing.ioliu.cn/v1/rand?t=' + new Date().getTime().toString());
-
-  span.appendChild(img);
-  p.appendChild(span);
 
   const focusNode = document.getSelection()!.focusNode;
   const topElement = document.querySelector('.lake-content-editor-core');
@@ -47,7 +37,7 @@ function insertRandomImage() {
     parentElement = parentElement?.parentElement || null;
   }
 
-  topElement!.insertBefore(p, parentElement.nextSibling);
+  topElement!.insertBefore(img, parentElement.nextSibling);
 }
 
 export default insertRandomImage;
