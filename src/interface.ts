@@ -23,25 +23,96 @@ export type ContextType =
   | 'action';
 
 export enum Type {
-  Url = 'url', // 复制页面链接
-  HTML = 'html', // 查看 HTML 结构
-  Save = 'save', //网页转存
-  Link = 'link', //复制链接
-  Diary = 'diary', //日记
-  Emoji = 'emoji', //插入表情
-  Image = 'image', // 复制图片
-  Insert = 'insert', // 插入随机图片
-  Header = 'header', // 插入彩色标题头
-  Indent = 'indent', //首行缩进
-  Format = 'format', //文本格式化
-  Setting = 'setting', //设置
-  Tooltip = 'tooltip', // 插入提示框
-  Feedback = 'feedback', //帮助和反馈
-  Markdown = 'markdown', //查看 Markdown 结构
+  /**
+   * 菜单分割线
+   * @type {Type.Separator}
+   */
   Separator = 'separator',
-  Directory = 'directory', // 查看目录列表
-  MindMapping = 'mind-mapping', // 生成思维导图
-  SerialNumber = 'serial-number' // 生成序列号
+  /**
+   * 复制页面链接
+   * @type {Type.CopyUrl}
+   */
+  CopyUrl = 'copy url',
+  /**
+   * 查看 HTML 结构
+   * @type {Type.ViewHTML}
+   */
+  ViewHTML = 'view HTML',
+  /**
+   * 复制链接
+   * @type {Type.CopyLink}
+   */
+  CopyLink = 'copy link',
+  /**
+   * 生成日记
+   * @type {Type.CreateDiary}
+   */
+  CreateDiary = 'create diary',
+  /**
+   * 插入 Emoji 表情
+   * @type {Type.InsertEmoji}
+   */
+  InsertEmoji = 'insert emoji',
+  /**
+   * 复制图片
+   * @type {Type.CopyImage}
+   */
+  CopyImage = 'copy image',
+  /**
+   * 插入随机图片
+   * @type {Type.InsertRandomImage}
+   */
+  InsertRandomImage = 'insert random image',
+  /**
+   * 插入空行
+   * @type {Type.InsertBlankLine}
+   */
+  InsertBlankLine = 'insert blank line',
+  /**
+   * 查看 Markdown 结构
+   * @type {Type.ViewMarkdown}
+   */
+  ViewMarkdown = 'view markdown',
+  /**
+   * 复制文章大纲
+   * @type {Type.CopyTOC}
+   */
+  CopyTOC = 'copy TOC',
+  /**
+   * 复制目录列表
+   * @type {Type.CopyDirectory}
+   */
+  CopyDirectory = 'copy directory',
+  /**
+   * 生成思维导图
+   * @type {Type.CreateMindMapping}
+   */
+  CreateMindMapping = 'create mind mapping',
+  /**
+   * 插入统计信息
+   * @type {Type.InsertSummaryInfo}
+   */
+  InsertSummaryInfo = 'insert summary info',
+  /**
+   * 播放环境声（白噪声）
+   * @type {Type.PlayAmbienceSound}
+   */
+  PlayAmbienceSound = 'play ambience sound',
+  /**
+   * 插入提示框
+   * @type {Type.InsertTooltip}
+   */
+  InsertTooltip = 'insert tooltip',
+  /**
+   * 设置
+   * @type {Type.Setting}
+   */
+  Setting = 'setting',
+  /**
+   * 帮助和反馈
+   * @type {Type.Help}
+   */
+  Help = 'help'
 }
 
 export interface RequestFromContentScript {

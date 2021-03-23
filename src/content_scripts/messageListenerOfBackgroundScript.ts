@@ -14,22 +14,22 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
   sendResponse
 ) {
   switch (request.type) {
-    case Type.Url:
+    case Type.CopyUrl:
       await copyUrl();
       break;
-    case Type.Link:
+    case Type.CopyLink:
       await copyLink(request.info);
       break;
-    case Type.Image:
+    case Type.CopyImage:
       await copyImage(request.info);
       break;
-    case Type.Markdown:
+    case Type.ViewMarkdown:
       viewMarkdown();
       break;
-    case Type.HTML:
+    case Type.ViewHTML:
       viewHTML();
       break;
-    case Type.Insert:
+    case Type.InsertRandomImage:
       insertRandomImage();
       break;
   }

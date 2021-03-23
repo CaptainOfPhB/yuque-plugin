@@ -21,6 +21,7 @@ chrome.runtime.onMessage.addListener(function messageListener(
       Menu.forEach((item: MenuItem, index: number) => {
         if (item.type === Type.Separator) {
           chrome.contextMenus.create({
+            contexts: ['all'],
             type: 'separator',
             id: 'separator' + index,
             parentId: 'yuque-plugin'
@@ -34,26 +35,6 @@ chrome.runtime.onMessage.addListener(function messageListener(
             visible: item.onlyRunOnYuquePage ? request.isYuquePage : true
           });
         }
-      });
-
-      chrome.contextMenus.create({
-        id: 'separator',
-        type: 'separator',
-        parentId: 'yuque-plugin'
-      });
-
-      chrome.contextMenus.create({
-        id: Type.Setting,
-        title: '设置插件',
-        contexts: ['all'],
-        parentId: 'yuque-plugin'
-      });
-
-      chrome.contextMenus.create({
-        id: Type.Feedback,
-        title: '帮助及反馈',
-        contexts: ['all'],
-        parentId: 'yuque-plugin'
       });
     });
   }
