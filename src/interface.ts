@@ -120,9 +120,13 @@ export enum Type {
   Help = 'help'
 }
 
-export interface RequestFromContentScript {
+export interface RequestCreateContextMenu {
   isYuquePage: boolean;
   action: 'createContextMenu';
+}
+
+export interface RequestOpenOptionsPage {
+  action: 'openOptionsPage';
 }
 
 export interface RequestFromBackgroundScript {

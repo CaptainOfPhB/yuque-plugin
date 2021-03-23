@@ -2,9 +2,9 @@ import './overrideNotyConfiguration';
 import './messageListenerOfBackgroundScript';
 
 import isYuquePage from '@/helper/isYuquePage';
-import { RequestFromContentScript } from '@/interface';
+import { RequestCreateContextMenu } from '@/interface';
 
 chrome.runtime.sendMessage({
   isYuquePage: isYuquePage(),
   action: 'createContextMenu'
-} as RequestFromContentScript);
+} as RequestCreateContextMenu);

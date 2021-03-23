@@ -3,10 +3,10 @@ import Menu from '@/config/menu';
 import Tab = chrome.tabs.Tab;
 import MessageSender = chrome.runtime.MessageSender;
 import OnClickData = chrome.contextMenus.OnClickData;
-import { MenuItem, RequestFromContentScript, Type } from '@/interface';
+import { MenuItem, RequestCreateContextMenu, Type } from '@/interface';
 
 chrome.runtime.onMessage.addListener(function messageListener(
-  request: RequestFromContentScript,
+  request: RequestCreateContextMenu,
   _sender: MessageSender,
   sendResponse
 ) {

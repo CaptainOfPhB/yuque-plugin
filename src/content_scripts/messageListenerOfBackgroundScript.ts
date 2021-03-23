@@ -9,6 +9,7 @@ import viewHTML from '@/actions/viewHTML';
 import viewMarkdown from '@/actions/viewMarkdown';
 import insertRandomImage from '@/actions/insertRandomImage';
 import indentTheFirstLineOfParagraph from '@/actions/indentTheFirstLineOfParagraph';
+import openOptionsPage from '@/actions/openOptionsPage';
 
 chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
   request: RequestFromBackgroundScript,
@@ -39,6 +40,9 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       break;
     case Type.Indent:
       indentTheFirstLineOfParagraph();
+      break;
+    case Type.Setting:
+      openOptionsPage();
       break;
   }
 
