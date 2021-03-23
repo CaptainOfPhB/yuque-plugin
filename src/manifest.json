@@ -29,7 +29,9 @@
       ]
     }
   ],
+  "options_page": "options.html",
   "action": {
+    "default_popup": "popup.html",
     "default_icons": {
       "16": "images/yuque_16.png",
       "32": "images/yuque_32.png",
