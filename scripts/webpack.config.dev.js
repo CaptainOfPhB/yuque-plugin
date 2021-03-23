@@ -21,12 +21,10 @@ const messages = `Build success, now you can follow the steps below:
 module.exports = {
   mode: 'development',
   entry: {
-    main: resolve('../src/index.tsx'),
+    popup: resolve('../src/pages/popup/index.tsx'),
+    options: resolve('../src/pages/options/index.tsx'),
     background: resolve('../src/background/index.ts'),
     content_scripts: resolve('../src/content_scripts/index.ts')
-  },
-  output: {
-    path: resolve('../dist')
   },
   watch: true,
   watchOptions: {
@@ -94,10 +92,22 @@ module.exports = {
     hints: false
   },
   plugins: [
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      cleanStaleWebpackAssets: false
+    }),
     new HtmlWebpackPlugin({
-      chunks: ['main'],
-      template: resolve('../public/index.html')
+      inject: true,
+      chunks: ['popup'],
+      filename: 'popup.html',
+      template: resolve('../public/popup.html'),
+      favicon: resolve('../src/images/yuque_32.png')
+    }),
+    new HtmlWebpackPlugin({
+      inject: true,
+      chunks: ['options'],
+      filename: 'options.html',
+      template: resolve('../public/options.html'),
+      favicon: resolve('../src/images/yuque_32.png')
     }),
     new MiniCssExtractPlugin(),
     new EslintPlugin({
@@ -111,7 +121,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: resolve('../manifest.json'), to: resolve('../dist'), toType: 'dir' },
+        { from: resolve('../src/manifest.json'), to: resolve('../dist'), toType: 'dir' },
         { from: resolve('../src/images'), to: resolve('../dist/images'), toType: 'dir' },
         { from: resolve('../src/vendors'), to: resolve('../dist/vendors'), toType: 'dir' }
       ]
