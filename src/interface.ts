@@ -69,6 +69,11 @@ export enum Type {
    */
   InsertBlankLine = 'insert blank line',
   /**
+   * 首行缩进
+   * @type {Type.Indent}
+   */
+  Indent = 'indent',
+  /**
    * 查看 Markdown 结构
    * @type {Type.ViewMarkdown}
    */

@@ -59,6 +59,12 @@ const Menu: MenuItem[] = [
     contexts: ['all']
   },
   {
+    type: Type.Indent,
+    title: '插入缩进',
+    onlyRunOnYuquePage: true,
+    contexts: ['all']
+  },
+  {
     type: Type.InsertBlankLine,
     title: '插入空行',
     onlyRunOnYuquePage: true,

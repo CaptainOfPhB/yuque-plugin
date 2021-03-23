@@ -2,6 +2,9 @@ import underEditing from '@/helper/underEditing';
 import isArticlePage from '@/helper/isArticlePage';
 import isCursorFocusedOnEditor from '@/helper/isCursorFocusedOnEditor';
 
+/**
+ * Insert an random image from Bing
+ */
 function insertRandomImage() {
   if (!isArticlePage()) {
     return new Noty({
@@ -22,12 +25,19 @@ function insertRandomImage() {
     }).show();
   }
 
-  const selection = document.getSelection()!;
-  const parentElement = selection.focusNode!.parentElement!;
   const img = document.createElement('img');
-  img.src = 'https://bing.ioliu.cn/v1/rand?t=' + new Date().getTime().toString();
-  img.alt = 'random image from Bing';
-  parentElement.appendChild(img);
+  img.setAttribute('alt', 'random image from Bing');
+  img.setAttribute('src', 'https://bing.ioliu.cn/v1/rand?t=' + new Date().getTime().toString());
+
+  const focusNode = document.getSelection()!.focusNode;
+  const topElement = document.querySelector('.lake-content-editor-core');
+
+  let parentElement = focusNode?.parentElement;
+  while (!parentElement?.getAttribute('data-lake-id') && parentElement?.parentElement !== topElement) {
+    parentElement = parentElement?.parentElement || null;
+  }
+
+  topElement!.insertBefore(img, parentElement.nextSibling);
 }
 
 export default insertRandomImage;
