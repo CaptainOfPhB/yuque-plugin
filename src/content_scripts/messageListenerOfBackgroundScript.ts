@@ -3,8 +3,9 @@ import { RequestFromBackgroundScript, Type } from '@/interface';
 
 import copyUrl from '@/actions/copyUrl';
 import copyLink from '@/actions/copyLink';
-import viewHTML from '@/actions/viewHTML';
+import copyDirectory from '@/actions/copyDirectory';
 import copyImage from '@/actions/copyImage';
+import viewHTML from '@/actions/viewHTML';
 import viewMarkdown from '@/actions/viewMarkdown';
 import insertRandomImage from '@/actions/insertRandomImage';
 import indentTheFirstLineOfParagraph from '@/actions/indentTheFirstLineOfParagraph';
@@ -23,6 +24,9 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       break;
     case Type.CopyImage:
       await copyImage(request.info);
+      break;
+    case Type.CopyDirectory:
+      await copyDirectory(request.info);
       break;
     case Type.ViewMarkdown:
       viewMarkdown();
