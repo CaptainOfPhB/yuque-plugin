@@ -21,10 +21,9 @@
       ],
       "run_at": "document_end",
       "css": [
-        "vendors/noty/noty.min.css"
+        "vendors/antd/antd.min.css"
       ],
       "js": [
-        "vendors/noty/noty.min.js",
         "content_scripts.js"
       ]
     }
