@@ -1,3 +1,4 @@
+import Http from '@/http';
 import { CheckOutlined } from '@ant-design/icons';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Type, TypeDescription, FieldsValue, Config } from '@/interface';
@@ -14,8 +15,30 @@ function Options() {
     });
   }, []);
 
-  const onFinish = useCallback((values: unknown) => {
-    console.log(values);
+  useEffect(() => {
+    async function getUser() {
+      const result = await Http<unknown>({ url: '/user' });
+      console.log(result);
+    }
+
+    void getUser();
+  }, [yuqueConfig]);
+
+  const onFinish = useCallback((values: FieldsValue) => {
+    const { domain, userName, repoName, accessToken, readingSpeed, ...menu } = values;
+    const config: Config = {
+      menu,
+      yuque: {
+        domain: values.domain,
+        userName: values.userName,
+        repoName: values.repoName,
+        accessToken: values.accessToken
+      },
+      basic: {
+        readingSpeed: values.readingSpeed
+      }
+    };
+    setYuqueConfig(config);
   }, []);
 
   return (
