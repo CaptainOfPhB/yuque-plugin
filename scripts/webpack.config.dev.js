@@ -64,7 +64,18 @@ module.exports = {
               }
             }
           },
-          'less-loader'
+          {
+            loader: 'less-loader',
+            options: {
+              lessOptions: {
+                modifyVars: {
+                  'primary-color': '#25b864',
+                  'link-color': '#25b864'
+                },
+                javascriptEnabled: true
+              }
+            }
+          }
         ]
       },
       {
@@ -87,7 +98,7 @@ module.exports = {
       '@': resolve('../src')
     }
   },
-  stats: 'errors-only',
+  stats: 'errors-warnings',
   performance: {
     hints: false
   },
