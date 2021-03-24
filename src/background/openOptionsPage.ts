@@ -7,7 +7,7 @@ chrome.runtime.onMessage.addListener(function messageListener(
   sendResponse
 ) {
   if (request.action === 'openOptionsPage') {
-    chrome.tabs.create({ url: '/options.html' });
+    chrome.runtime.openOptionsPage();
   }
 
   sendResponse();
