@@ -56,7 +56,6 @@
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "antd": "^4.14.1",
-    "noty": "3.1.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },

@@ -1,4 +1,3 @@
-import './overrideNotyConfiguration';
 import './messageListenerOfBackgroundScript';
 
 import isYuquePage from '@/helper/isYuquePage';

@@ -1,4 +1,5 @@
 import OnClickData = chrome.contextMenus.OnClickData;
+import copyToClipboard from '@/helper/copyToClipboard';
 
 /**
  * Copy the link address to markdown format
@@ -7,11 +8,7 @@ import OnClickData = chrome.contextMenus.OnClickData;
  */
 async function copyLink(info: OnClickData): Promise<void> {
   const markdownLink = `[${info.selectionText}](${info.linkUrl})`;
-  await navigator.clipboard.writeText(markdownLink);
-  new Noty({
-    type: 'success',
-    text: '已复制链接地址至粘贴板！'
-  }).show();
+  await copyToClipboard(markdownLink, '链接地址');
 }
 
 export default copyLink;

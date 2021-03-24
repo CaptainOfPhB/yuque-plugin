@@ -30,16 +30,16 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       await copyDirectory(request.info);
       break;
     case Type.ViewMarkdown:
-      viewMarkdown();
+      await viewMarkdown();
       break;
     case Type.ViewHTML:
-      viewHTML();
+      await viewHTML();
       break;
     case Type.InsertRandomImage:
-      insertRandomImage();
+      await insertRandomImage();
       break;
     case Type.Indent:
-      indentTheFirstLineOfParagraph();
+      await indentTheFirstLineOfParagraph();
       break;
     case Type.Setting:
       openOptionsPage();

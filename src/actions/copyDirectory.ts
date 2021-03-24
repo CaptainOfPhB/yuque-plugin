@@ -1,4 +1,6 @@
+import { message } from 'antd';
 import OnClickData = chrome.contextMenus.OnClickData;
+import copyToClipboard from '@/helper/copyToClipboard';
 import isDirectoryPage from '@/helper/isDirectoryPage';
 
 /**
@@ -8,17 +10,10 @@ import isDirectoryPage from '@/helper/isDirectoryPage';
  */
 async function copyDirectory(info: OnClickData): Promise<void> {
   if (!isDirectoryPage()) {
-    return new Noty({
-      type: 'error',
-      text: '该功能只可在知识库的目录编排页使用！'
-    }).show();
+    return message.error('该功能只可在知识库的目录编排页使用！');
   }
   const markdownLink = `![image](${info.srcUrl})`;
-  await navigator.clipboard.writeText(markdownLink);
-  new Noty({
-    type: 'success',
-    text: '已复制图片链接至粘贴板！'
-  }).show();
+  await copyToClipboard(markdownLink, '图片链接');
 }
 
 export default copyDirectory;

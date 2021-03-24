@@ -1,21 +1,16 @@
+import { message } from 'antd';
 import underEditing from '@/helper/underEditing';
 import isArticlePage from '@/helper/isArticlePage';
 
 /**
  * Indent the first line of paragraph with 2em
  */
-function indentTheFirstLineOfParagraph() {
+async function indentTheFirstLineOfParagraph() {
   if (!isArticlePage()) {
-    return new Noty({
-      type: 'error',
-      text: '该功能只可在文档页面使用！'
-    }).show();
+    return message.error('该功能只可在文档页面使用！');
   }
   if (!underEditing()) {
-    return new Noty({
-      type: 'error',
-      text: '该功能只可在编辑文档时使用！'
-    }).show();
+    return message.error('该功能只可在编辑文档时使用！');
   }
 
   const nodeList = document.querySelectorAll<HTMLElement>('.lake-content-editor-core > p');

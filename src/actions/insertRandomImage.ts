@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import underEditing from '@/helper/underEditing';
 import isArticlePage from '@/helper/isArticlePage';
 import isCursorFocusedOnEditor from '@/helper/isCursorFocusedOnEditor';
@@ -5,24 +6,15 @@ import isCursorFocusedOnEditor from '@/helper/isCursorFocusedOnEditor';
 /**
  * Insert an random image from Bing
  */
-function insertRandomImage() {
+async function insertRandomImage() {
   if (!isArticlePage()) {
-    return new Noty({
-      type: 'error',
-      text: '该功能只可在文档页面使用！'
-    }).show();
+    return message.error('该功能只可在文档页面使用！');
   }
   if (!underEditing()) {
-    return new Noty({
-      type: 'error',
-      text: '该功能只可在编辑文档时使用！'
-    }).show();
+    return message.error('该功能只可在编辑文档时使用！');
   }
   if (!isCursorFocusedOnEditor()) {
-    return new Noty({
-      type: 'error',
-      text: '请将光标聚焦在编辑区后再使用！'
-    }).show();
+    return message.error('请将光标聚焦在编辑区后再使用！');
   }
 
   const img = document.createElement('img');
