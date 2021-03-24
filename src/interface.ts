@@ -23,102 +23,76 @@ export type ContextType =
   | 'action';
 
 export enum Type {
-  /**
-   * 菜单分割线
-   * @type {Type.Separator}
-   */
-  Separator = 'separator',
-  /**
-   * 复制页面链接
-   * @type {Type.CopyUrl}
-   */
-  CopyUrl = 'copy url',
-  /**
-   * 查看 HTML 结构
-   * @type {Type.ViewHTML}
-   */
-  ViewHTML = 'view HTML',
-  /**
-   * 复制链接
-   * @type {Type.CopyLink}
-   */
-  CopyLink = 'copy link',
-  /**
-   * 生成日记
-   * @type {Type.CreateDiary}
-   */
-  CreateDiary = 'create diary',
-  /**
-   * 插入 Emoji 表情
-   * @type {Type.InsertEmoji}
-   */
-  InsertEmoji = 'insert emoji',
-  /**
-   * 复制图片
-   * @type {Type.CopyImage}
-   */
-  CopyImage = 'copy image',
-  /**
-   * 插入随机图片
-   * @type {Type.InsertRandomImage}
-   */
-  InsertRandomImage = 'insert random image',
-  /**
-   * 插入空行
-   * @type {Type.InsertBlankLine}
-   */
-  InsertBlankLine = 'insert blank line',
-  /**
-   * 首行缩进
-   * @type {Type.Indent}
-   */
-  Indent = 'indent',
-  /**
-   * 查看 Markdown 结构
-   * @type {Type.ViewMarkdown}
-   */
-  ViewMarkdown = 'view markdown',
-  /**
-   * 复制文章大纲
-   * @type {Type.CopyTOC}
-   */
-  CopyTOC = 'copy TOC',
-  /**
-   * 复制目录列表
-   * @type {Type.CopyDirectory}
-   */
-  CopyDirectory = 'copy directory',
-  /**
-   * 生成思维导图
-   * @type {Type.CreateMindMapping}
-   */
-  CreateMindMapping = 'create mind mapping',
-  /**
-   * 插入统计信息
-   * @type {Type.InsertSummaryInfo}
-   */
-  InsertSummaryInfo = 'insert summary info',
-  /**
-   * 播放环境声（白噪声）
-   * @type {Type.PlayAmbienceSound}
-   */
-  PlayAmbienceSound = 'play ambience sound',
-  /**
-   * 插入提示框
-   * @type {Type.InsertTooltip}
-   */
-  InsertTooltip = 'insert tooltip',
-  /**
-   * 设置
-   * @type {Type.Setting}
-   */
-  Setting = 'setting',
-  /**
-   * 帮助和反馈
-   * @type {Type.Help}
-   */
-  Help = 'help'
+  Help = 'Help',
+  Indent = 'Indent',
+  CopyUrl = 'CopyUrl',
+  CopyTOC = 'CopyTOC',
+  Setting = 'Setting',
+  ViewHTML = 'ViewHTML',
+  CopyLink = 'CopyLink',
+  Separator = 'Separator',
+  CopyImage = 'CopyImage',
+  CreateDiary = 'CreateDiary',
+  InsertEmoji = 'InsertEmoji',
+  ViewMarkdown = 'ViewMarkdown',
+  InsertTooltip = 'InsertTooltip',
+  CopyDirectory = 'CopyDirectory',
+  InsertBlankLine = 'InsertBlankLine',
+  InsertRandomImage = 'InsertRandomImage',
+  CreateMindMapping = 'CreateMindMapping',
+  InsertSummaryInfo = 'InsertSummaryInfo',
+  PlayAmbienceSound = 'PlayAmbienceSound'
 }
+
+export enum TypeDescription {
+  Indent = '首行缩进',
+  Help = '帮助和反馈',
+  Setting = '设置插件',
+  CopyLink = '复制链接',
+  CopyImage = '复制图片',
+  CopyUrl = '复制页面链接',
+  CopyTOC = '复制文章大纲',
+  Separator = '菜单分割线',
+  CreateDiary = '生成日记',
+  ViewHTML = '查看 HTML 结构',
+  InsertTooltip = '插入提示框',
+  InsertBlankLine = '插入空行',
+  CopyDirectory = '复制目录列表',
+  InsertEmoji = '插入 Emoji 表情',
+  InsertRandomImage = '插入随机图片',
+  CreateMindMapping = '生成思维导图',
+  InsertSummaryInfo = '插入统计信息',
+  ViewMarkdown = '查看 Markdown 结构',
+  PlayAmbienceSound = '播放环境声（白噪声）'
+}
+
+export interface Config {
+  menu: MenuConfig;
+  yuque: YuqueConfig;
+  basic: BasicConfig;
+}
+
+export type YuqueConfig = Partial<{
+  domain: string;
+  repoName: string;
+  userName: string;
+  accessToken: string;
+}>;
+
+export type MenuConfig = Omit<
+  Partial<
+    {
+      [key in Type]: boolean;
+    }
+  >,
+  'separator' | 'setting' | 'help'
+>;
+
+export type BasicConfig = Partial<{
+  readingSpeed: number;
+}>;
+
+export type FieldsValue = YuqueConfig & BasicConfig & MenuConfig;
 
 export interface RequestCreateContextMenu {
   isYuquePage: boolean;
