@@ -92,8 +92,6 @@ export type BasicConfig = Partial<{
   readingSpeed: number;
 }>;
 
-export type FieldsValue = YuqueConfig & BasicConfig & MenuConfig;
-
 export interface RequestCreateContextMenu {
   isYuquePage: boolean;
   action: 'createContextMenu';
