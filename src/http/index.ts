@@ -1,4 +1,4 @@
-import { Config } from '@/interface';
+import { YuqueConfig } from '@/interface';
 import { message, notification } from 'antd';
 import { MessageMapping, ResponseWithError } from '@/http/interface';
 import Axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
@@ -10,10 +10,10 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 
 axios.interceptors.request.use(async function (config: AxiosRequestConfig) {
   return new Promise(function (resolve) {
-    chrome.storage.local.get(['yuqueConfig'], function (values) {
-      const store = values as { yuqueConfig: Config };
-      config.headers['X-Auth-Token'] = store.yuqueConfig.yuque.accessToken;
-      config.url = `https://${store.yuqueConfig.yuque.domain}.yuque.com/api/v2` + config.url;
+    chrome.storage.sync.get(['yuqueConfig'], function (values) {
+      const store = values as { yuqueConfig: YuqueConfig };
+      config.headers['X-Auth-Token'] = store.yuqueConfig.accessToken;
+      config.url = `https://${store.yuqueConfig.domain}.yuque.com/api/v2` + config.url;
       resolve(config);
     });
   });

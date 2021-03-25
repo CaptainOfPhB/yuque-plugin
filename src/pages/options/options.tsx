@@ -1,41 +1,66 @@
+import {
+  Type,
+  TypeDescription,
+  UserSerializer,
+  YuqueConfig,
+  BasicConfig,
+  MenuConfig,
+  YuqueFormFieldsValue,
+  BasicFormFieldsValue,
+  MenuFormFieldsValue
+} from '@/interface';
 import React from 'react';
 import * as Service from '@/service';
+import { Response } from '@/http/interface';
 import { CheckOutlined } from '@ant-design/icons';
-import { Row, Col, Card, Form, Input, Button, Checkbox, Skeleton, FormInstance, message } from 'antd';
-import { Config, YuqueConfig, BasicConfig, MenuConfig, Type, TypeDescription, UserSerializer } from '@/interface';
+import { Row, Col, Card, Form, Input, Button, Checkbox, Skeleton, FormInstance, notification } from 'antd';
 
 import './options.less';
 
 interface OptionsPageState {
-  yuqueConfig: Config | undefined;
+  user: UserSerializer | undefined;
+  menuConfig: MenuConfig | undefined;
+  yuqueConfig: YuqueConfig | undefined;
+  basicConfig: BasicConfig | undefined;
 }
 
 class Options extends React.Component<unknown, OptionsPageState> {
-  yuqueForm = React.createRef<FormInstance<YuqueConfig>>();
-  basicForm = React.createRef<FormInstance<BasicConfig>>();
-  menuForm = React.createRef<FormInstance<MenuConfig>>();
+  yuqueForm = React.createRef<FormInstance<YuqueFormFieldsValue>>();
+  basicForm = React.createRef<FormInstance<BasicFormFieldsValue>>();
+  menuForm = React.createRef<FormInstance<MenuFormFieldsValue>>();
 
   state: OptionsPageState = {
-    yuqueConfig: undefined
+    user: undefined,
+    menuConfig: undefined,
+    yuqueConfig: undefined,
+    basicConfig: undefined
   };
 
   componentDidMount() {
-    chrome.storage.local.get(['yuqueConfig'], store => {
-      this.setState({ yuqueConfig: store.yuqueConfig });
+    chrome.storage.sync.get(['yuqueConfig', 'basicConfig', 'menuConfig', 'user'], store => {
+      this.setState({
+        user: store.user,
+        menuConfig: store.menuConfig,
+        yuqueConfig: store.yuqueConfig,
+        basicConfig: store.basicConfig
+      });
     });
   }
 
-  onYuqueFormFinish = (fieldsValues: YuqueConfig) => {
-    chrome.storage.local.set({ yuqueConfig: fieldsValues }, async () => {
-      const user = await Service.getUser<UserSerializer>();
+  onYuqueFormFinish = (fieldsValues: YuqueFormFieldsValue) => {
+    chrome.storage.sync.set({ yuqueConfig: fieldsValues }, async () => {
+      const user = await Service.getUser<Response<UserSerializer>>();
       if (!user) {
-        chrome.storage.local.set({ yuqueConfig: this.state.yuqueConfig });
+        chrome.storage.sync.set({ yuqueConfig: this.state.yuqueConfig });
         return;
       }
-      if (user.name !== fieldsValues.userName) {
-        void message.info('Access Token 所属用户与之前不一致，若您意为更改用户，请忽略此消息。');
-      }
-      chrome.storage.local.set({ user });
+      chrome.storage.sync.set({ user: user.data });
+      this.yuqueForm.current?.setFieldsValue({ userName: user.data.name });
+      const isSameUser = fieldsValues.userName && user.data.name !== fieldsValues.userName;
+      notification.success({
+        message: '保存成功！',
+        description: isSameUser ? 'Access Token 所属用户与之前不一致，若您意为更改用户，请忽略此消息。' : undefined
+      });
     });
   };
 
@@ -69,18 +94,20 @@ class Options extends React.Component<unknown, OptionsPageState> {
   };
 
   renderYuqueCard = () => {
+    const { yuqueConfig, user } = this.state;
+
     return (
-      <Form<YuqueConfig>
+      <Form<YuqueFormFieldsValue>
         layout='vertical'
         ref={this.yuqueForm}
         onFinish={this.onYuqueFormFinish}
-        initialValues={this.state.yuqueConfig?.yuque}
+        initialValues={{ ...yuqueConfig, userName: user?.name }}
       >
         <Card
           title='语雀配置'
           bordered={false}
           extra={
-            <Button type='primary' ghost={true} icon={<CheckOutlined />}>
+            <Button type='primary' htmlType='submit' ghost={true} icon={<CheckOutlined />}>
               保存
             </Button>
           }
@@ -95,18 +122,20 @@ class Options extends React.Component<unknown, OptionsPageState> {
               <Form.Item
                 name='userName'
                 label='语雀用户名'
-                extra='填入 Access Token 并保存，将自动获取用户名'
                 normalize={(name: string) => name && name.trim()}
+                extra={<span style={{ fontSize: 11 }}>填入 Access Token 并保存，将自动获取用户名</span>}
               >
                 <Input disabled={true} autoComplete='off' placeholder='请填写语雀用户名' />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
+                required={true}
                 name='accessToken'
                 normalize={(token: string) => token && token.trim()}
                 tooltip='Yuque plugin 部分功能需要 Access Token 验证后才能使用'
                 label={<span style={{ paddingRight: 5 }}>Access Token</span>}
+                rules={[{ required: true, message: '请填写 Access Token 以使用插件全部功能' }]}
                 extra={
                   <span style={{ fontSize: 11 }}>
                     没有&nbsp;Access&nbsp;Token?&nbsp;
@@ -155,11 +184,11 @@ class Options extends React.Component<unknown, OptionsPageState> {
 
   renderBasicCard = () => {
     return (
-      <Form<BasicConfig>
+      <Form<BasicFormFieldsValue>
         layout='vertical'
         ref={this.basicForm}
         // onFinish={this.onFinish}
-        initialValues={this.state.yuqueConfig?.basic}
+        initialValues={this.state.basicConfig}
       >
         <Card title='基础配置' bordered={false}>
           <Row gutter={16}>
@@ -183,6 +212,16 @@ class Options extends React.Component<unknown, OptionsPageState> {
                 <Input autoComplete='off' placeholder='请填写每分钟阅读字数' suffix='字/分钟' />
               </Form.Item>
             </Col>
+            <Col span={12}>
+              <Form.Item
+                name='fontFamily'
+                tooltip='覆盖语雀页面字体，若部分字体覆盖不全，请联系插件作者'
+                label={<span style={{ paddingRight: 5 }}>自定义字体</span>}
+                extra={<span style={{ fontSize: 11 }}>若有英文字体名，请置于中文字体名前</span>}
+              >
+                <Input placeholder='请填写字体名，多个以英文逗号进行分隔' />
+              </Form.Item>
+            </Col>
           </Row>
         </Card>
       </Form>
@@ -190,18 +229,18 @@ class Options extends React.Component<unknown, OptionsPageState> {
   };
 
   renderMenuCard = () => {
-    const { yuqueConfig } = this.state;
+    const { menuConfig } = this.state;
 
     return (
-      <Form<MenuConfig>
+      <Form<MenuFormFieldsValue>
         layout='vertical'
         ref={this.menuForm}
         // onFinish={this.onFinish}
-        initialValues={this.state.yuqueConfig?.menu}
+        initialValues={menuConfig}
       >
         <Card title='菜单配置' bordered={false}>
           <Row>
-            {Object.keys(yuqueConfig?.menu || {}).map((name: string) => {
+            {Object.keys(menuConfig || {}).map((name: string) => {
               return (
                 <React.Fragment key={name}>
                   <Col span={6} style={{ paddingTop: 4, margin: '0 10px', textAlign: 'right' }}>

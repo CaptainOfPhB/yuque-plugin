@@ -66,18 +66,13 @@ export enum TypeDescription {
   PlayAmbienceSound = '播放环境声（白噪声）'
 }
 
-export interface Config {
-  menu: MenuConfig;
-  yuque: YuqueConfig;
-  basic: BasicConfig;
-}
-
 export type YuqueConfig = Partial<{
   domain: string;
   repoName: string;
-  userName: string;
   accessToken: string;
 }>;
+
+export type YuqueFormFieldsValue = YuqueConfig & { userName?: string };
 
 export type MenuConfig = Omit<
   Partial<
@@ -88,9 +83,13 @@ export type MenuConfig = Omit<
   'separator' | 'setting' | 'help'
 >;
 
+export type MenuFormFieldsValue = MenuConfig;
+
 export type BasicConfig = Partial<{
   readingSpeed: number;
 }>;
+
+export type BasicFormFieldsValue = BasicConfig;
 
 export interface RequestCreateContextMenu {
   isYuquePage: boolean;
