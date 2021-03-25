@@ -105,3 +105,30 @@ export interface RequestFromBackgroundScript {
   type: Type;
   info: OnClickData;
 }
+
+/**
+ * Yuque user model
+ */
+export interface UserSerializer {
+  id: number;
+  type: UserType;
+  space_id: number;
+  account_id: number;
+  login: string;
+  name: string;
+  avatar_url: string;
+  books_count: number;
+  public_books_count: number;
+  followers_count: number;
+  following_count: number;
+  public: number;
+  description: string;
+  created_at: string;
+  updated_at: string;
+  _serializer: string;
+}
+
+export enum UserType {
+  User = 'User',
+  Group = 'Group'
+}
