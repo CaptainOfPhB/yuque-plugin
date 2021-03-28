@@ -5,11 +5,15 @@ import MessageSender = chrome.runtime.MessageSender;
 import OnClickData = chrome.contextMenus.OnClickData;
 import { MenuItem, RequestCreateContextMenu, Type } from '@/interface';
 
-chrome.runtime.onMessage.addListener(function messageListener(
-  request: RequestCreateContextMenu,
-  _sender: MessageSender,
-  sendResponse
-) {
+if (!chrome.runtime.onMessage.hasListener(messageListener)) {
+  chrome.runtime.onMessage.addListener(messageListener);
+}
+
+if (!chrome.contextMenus.onClicked.hasListener(onClickedCallback)) {
+  chrome.contextMenus.onClicked.addListener(onClickedCallback);
+}
+
+function messageListener(request: RequestCreateContextMenu, _sender: MessageSender, sendResponse: () => void) {
   if (request.action === 'createContextMenu') {
     chrome.contextMenus.removeAll(function createContextMenu() {
       chrome.contextMenus.create({
@@ -40,9 +44,9 @@ chrome.runtime.onMessage.addListener(function messageListener(
   }
 
   sendResponse();
-});
+}
 
-chrome.contextMenus.onClicked.addListener(function sendMessage(info: OnClickData, tab: Tab | undefined) {
+function onClickedCallback(info: OnClickData, tab: Tab | undefined) {
   const type = info.menuItemId as Type;
   chrome.tabs.sendMessage(tab!.id!, { type, info });
-});
+}

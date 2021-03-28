@@ -67,7 +67,6 @@ export enum TypeDescription {
 }
 
 export type YuqueConfig = Partial<{
-  domain: string;
   repoName: string;
   accessToken: string;
 }>;

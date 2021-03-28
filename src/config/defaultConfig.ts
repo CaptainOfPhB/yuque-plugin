@@ -1,7 +1,6 @@
 import { YuqueConfig, BasicConfig, MenuConfig } from '@/interface';
 
 export const Yuque_Config: YuqueConfig = {
-  domain: 'www',
   repoName: undefined,
   accessToken: undefined
 };

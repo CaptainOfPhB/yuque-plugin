@@ -1,11 +1,11 @@
 import { Yuque_Config, Basic_Config, Menu_Config } from '@/config/defaultConfig';
 
-chrome.storage.sync.clear(function () {
-  console.info('Yuque configuration has been cleared.');
-  chrome.storage.sync.set(
-    { yuqueConfig: Yuque_Config, basicConfig: Basic_Config, menuConfig: Menu_Config },
-    function () {
-      console.info('Yuque configuration has been successfully saved as "yuqueConfig".');
-    }
-  );
+chrome.storage.sync.get(function (store) {
+  if (!Object.keys(store).length) {
+    chrome.storage.sync.set({
+      yuqueConfig: Yuque_Config,
+      basicConfig: Basic_Config,
+      menuConfig: Menu_Config
+    });
+  }
 });
