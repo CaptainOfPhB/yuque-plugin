@@ -14,7 +14,6 @@ export const Menu_Config: MenuConfig = {
   CopyImage: true,
   Indent: true,
   CopyTOC: true,
-  Setting: true,
   ViewHTML: true,
   CopyLink: true,
   CreateDiary: true,

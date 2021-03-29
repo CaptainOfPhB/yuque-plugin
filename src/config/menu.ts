@@ -103,19 +103,6 @@ const Menu: MenuItem[] = [
     type: Type.PlayAmbienceSound,
     title: '播放环境音（白噪声）',
     contexts: ['all']
-  },
-  {
-    type: Type.Separator
-  },
-  {
-    type: Type.Setting,
-    title: '设置插件',
-    contexts: ['all']
-  },
-  {
-    type: Type.Help,
-    title: '帮助及反馈',
-    contexts: ['all']
   }
 ];
 

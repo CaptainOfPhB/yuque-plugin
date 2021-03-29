@@ -24,6 +24,8 @@ interface OptionsPageState {
   basicConfig: BasicConfig | undefined;
 }
 
+const cls = (s: string) => `yuque-plugin__${s}`;
+
 class Options extends React.Component<unknown, OptionsPageState> {
   yuqueForm = React.createRef<FormInstance<YuqueFormFieldsValue>>();
   basicForm = React.createRef<FormInstance<BasicFormFieldsValue>>();
@@ -52,46 +54,85 @@ class Options extends React.Component<unknown, OptionsPageState> {
     });
   }
 
-  onYuqueFormFinish = (fieldsValues: YuqueFormFieldsValue) => {
-    chrome.storage.sync.set({ yuqueConfig: fieldsValues }, async () => {
-      const [hasErr, userOrErrMsg] = await Service.getUser<UserSerializer>();
-      if (hasErr) {
-        chrome.storage.sync.set({ yuqueConfig: this.state.yuqueConfig });
-        return;
-      }
-      chrome.storage.sync.set({ user: userOrErrMsg });
-      this.yuqueForm.current?.setFieldsValue({ userName: (userOrErrMsg as UserSerializer).name });
-      const isSameUser = fieldsValues.userName && (userOrErrMsg as UserSerializer).name !== fieldsValues.userName;
-      notification.success({
-        message: '保存成功！',
-        description: isSameUser ? 'Access Token 所属用户与之前不一致，若您意为更改用户，请忽略此消息。' : undefined
-      });
-    });
+  // onYuqueFormFinish = (fieldsValues: YuqueFormFieldsValue) => {
+  //   chrome.storage.sync.set({ yuqueConfig: fieldsValues }, async () => {
+  //     const [hasErr, userOrErrMsg] = await Service.getUser<UserSerializer>();
+  //     if (hasErr) {
+  //       chrome.storage.sync.set({ yuqueConfig: this.state.yuqueConfig });
+  //       return;
+  //     }
+  //     chrome.storage.sync.set({ user: userOrErrMsg });
+  //     this.yuqueForm.current?.setFieldsValue({ userName: (userOrErrMsg as UserSerializer).name });
+  //     const isSameUser = fieldsValues.userName && (userOrErrMsg as UserSerializer).name !== fieldsValues.userName;
+  //     notification.success({
+  //       message: '保存成功！',
+  //       description: isSameUser ? 'Access Token 所属用户与之前不一致，若您意为更改用户，请忽略此消息。' : undefined
+  //     });
+  //   });
+  // };
+  //
+  onFormFinish = (
+    formName: string,
+    { values }: { values: YuqueFormFieldsValue | BasicFormFieldsValue | MenuFormFieldsValue }
+  ) => {
+    switch (formName) {
+      case 'yuque':
+        chrome.storage.sync.set({ yuqueConfig: values }, async () => {
+          const [hasErr, userOrErrMsg] = await Service.getUser<UserSerializer>();
+          if (hasErr) {
+            chrome.storage.sync.set({ yuqueConfig: this.state.yuqueConfig });
+            return;
+          }
+          chrome.storage.sync.set({ user: userOrErrMsg });
+          this.yuqueForm.current?.setFieldsValue({ userName: (userOrErrMsg as UserSerializer).name });
+          const isSameUser =
+            (values as YuqueFormFieldsValue).userName &&
+            (userOrErrMsg as UserSerializer).name !== (values as YuqueFormFieldsValue).userName;
+          notification.success({
+            message: '保存成功！',
+            description: isSameUser ? 'Access Token 所属用户与之前不一致，若您意为更改用户，请忽略此消息。' : undefined
+          });
+        });
+        break;
+      case 'basic':
+        chrome.storage.sync.set({ basicConfig: values }, function () {
+          notification.success({ message: '保存成功！' });
+        });
+        break;
+      case 'menu':
+        chrome.storage.sync.set({ menuConfig: values }, function () {
+          notification.success({ message: '保存成功！' });
+        });
+        break;
+    }
   };
 
   render() {
     return (
-      <div className='yuque-plugin__options-container'>
+      <div className={cls('options-container')}>
         {this.renderHeader()}
-        <div className='yuque-plugin__form-container'>
+        <div className={cls('form-container')}>
           <Skeleton active={true} loading={this.state.loading} title={false} paragraph={{ rows: 20 }}>
-            {this.renderYuqueCard()}
-            {this.renderBasicCard()}
-            {this.renderMenuCard()}
+            <Form.Provider onFormFinish={this.onFormFinish}>
+              {this.renderYuqueCard()}
+              {this.renderBasicCard()}
+              {this.renderMenuCard()}
+            </Form.Provider>
           </Skeleton>
         </div>
+        {this.renderFooter()}
       </div>
     );
   }
 
   renderHeader = () => {
     return (
-      <div className='yuque-plugin__title-container'>
-        <div className='yuque-plugin__icon'>
+      <div className={cls('title-container')}>
+        <div className={cls('icon')}>
           <img src='../../images/yuque_128.png' alt='yuque logo' />
           <span>Yuque plugin</span>
         </div>
-        <div className='yuque-plugin__slug'>Make Yuque more powerful.</div>
+        <div className={cls('slug')}>Make Yuque more powerful.</div>
       </div>
     );
   };
@@ -101,9 +142,9 @@ class Options extends React.Component<unknown, OptionsPageState> {
 
     return (
       <Form<YuqueFormFieldsValue>
+        name='yuque'
         layout='vertical'
         ref={this.yuqueForm}
-        onFinish={this.onYuqueFormFinish}
         initialValues={{ ...yuqueConfig, userName: user?.name }}
       >
         <Card
@@ -161,12 +202,20 @@ class Options extends React.Component<unknown, OptionsPageState> {
   renderBasicCard = () => {
     return (
       <Form<BasicFormFieldsValue>
+        name='basic'
         layout='vertical'
         ref={this.basicForm}
-        // onFinish={this.onFinish}
         initialValues={this.state.basicConfig}
       >
-        <Card title='基础配置' bordered={false}>
+        <Card
+          title='基础配置'
+          bordered={false}
+          extra={
+            <Button type='primary' htmlType='submit' ghost={true} icon={<CheckOutlined />}>
+              保存
+            </Button>
+          }
+        >
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
@@ -208,13 +257,16 @@ class Options extends React.Component<unknown, OptionsPageState> {
     const { menuConfig } = this.state;
 
     return (
-      <Form<MenuFormFieldsValue>
-        layout='vertical'
-        ref={this.menuForm}
-        // onFinish={this.onFinish}
-        initialValues={menuConfig}
-      >
-        <Card title='菜单配置' bordered={false}>
+      <Form<MenuFormFieldsValue> name='menu' layout='vertical' ref={this.menuForm} initialValues={menuConfig}>
+        <Card
+          title='菜单配置'
+          bordered={false}
+          extra={
+            <Button type='primary' htmlType='submit' ghost={true} icon={<CheckOutlined />}>
+              保存
+            </Button>
+          }
+        >
           <Row>
             {Object.keys(menuConfig || {}).map((name: string) => {
               return (
@@ -233,6 +285,18 @@ class Options extends React.Component<unknown, OptionsPageState> {
           </Row>
         </Card>
       </Form>
+    );
+  };
+
+  renderFooter = () => {
+    return (
+      <div className={cls('footer-container')}>
+        Copyright&nbsp;&copy;&nbsp;{new Date().getFullYear()},&nbsp;Powered&nbsp;by&nbsp;
+        <a href='https://github.com/CaptainOfPhB' target='_blank' rel='noreferrer'>
+          CaptainOfPhB
+        </a>
+        .
+      </div>
     );
   };
 }

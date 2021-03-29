@@ -85,6 +85,7 @@ export type MenuConfig = Omit<
 export type MenuFormFieldsValue = MenuConfig;
 
 export type BasicConfig = Partial<{
+  fontFamily: string;
   readingSpeed: number;
 }>;
 

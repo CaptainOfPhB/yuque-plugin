@@ -1,3 +1,5 @@
+@prefix: ~'yuque-plugin__';
+
 * {
   margin: 0;
   padding: 0;
@@ -9,51 +11,61 @@ html, body {
   height: 100vh;
 }
 
-.yuque-plugin__options-container {
-  width: 100vw;
-  padding: 80px 0;
-  background-color: #f7f7f7;
-  border: 1px solid #f7f7f7;
-}
+.@{prefix} {
+  &options-container {
+    width: 100vw;
+    padding: 80px 0;
+    background-color: #f7f7f7;
+    border: 1px solid #f7f7f7;
+  }
 
-.yuque-plugin__title-container {
-  width: 872px;
-  margin: 0 auto;
-  padding: 0 5px;
-  display: flex;
-  color: #333333;
-  justify-content: space-between;
-  align-items: baseline;
-}
+  &title-container {
+    width: 872px;
+    margin: 0 auto;
+    padding: 0 5px;
+    display: flex;
+    color: #333333;
+    justify-content: space-between;
+    align-items: baseline;
+  }
 
-.yuque-plugin__icon {
-  display: flex;
-  align-items: center;
-}
+  &icon {
+    display: flex;
+    align-items: center;
+  }
 
-.yuque-plugin__icon img {
-  width: 30px;
-  height: 30px;
-}
+  &icon img {
+    width: 30px;
+    height: 30px;
+  }
 
-.yuque-plugin__icon span {
-  margin-left: 10px;
-  font-weight: bold;
-  font-size: 24px;
-}
+  &icon span {
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 24px;
+  }
 
-.yuque-plugin__slug {
-  font-size: 14px;
-  font-weight: lighter;
-  font-style: italic;
-}
+  &slug {
+    font-size: 14px;
+    font-weight: lighter;
+    font-style: italic;
+  }
 
-.yuque-plugin__form-container {
-  width: 872px;
-  margin: 10px auto 0;
-  padding: 90px 60px;
-  background-color: #fff;
-  border: 1px solid #fff;
-  border-radius: 2px;
-  box-shadow: 0 10px 20px 0 rgb(236 236 236 / 86%);
+  &form-container {
+    width: 872px;
+    margin: 10px auto 0;
+    padding: 90px 60px;
+    background-color: #fff;
+    border: 1px solid #fff;
+    border-radius: 2px;
+    box-shadow: 0 10px 20px 0 rgb(236 236 236 / 86%);
+  }
+
+  &footer-container {
+    color: #999;
+    width: 872px;
+    font-size: 12px;
+    margin: 30px auto;
+    text-align: center;
+  }
 }
