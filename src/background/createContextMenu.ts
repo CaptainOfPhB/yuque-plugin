@@ -35,9 +35,9 @@ function messageListener(request: RequestCreateContextMenu, _sender: MessageSend
             if (store.menuConfig[item.type] !== false) {
               chrome.contextMenus.create({
                 id: item.type,
-                title: item.title,
                 contexts: item.contexts,
                 parentId: 'yuque-plugin',
+                title: TypeDescription[item.type],
                 visible: item.onlyRunOnYuquePage ? request.isYuquePage : true
               });
             }

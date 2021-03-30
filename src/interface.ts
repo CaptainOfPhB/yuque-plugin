@@ -2,7 +2,6 @@ import OnClickData = chrome.contextMenus.OnClickData;
 
 export interface MenuItem {
   type: Type;
-  title?: string;
   contexts?: ContextType[];
   onlyRunOnYuquePage?: boolean;
 }
