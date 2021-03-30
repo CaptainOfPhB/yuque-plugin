@@ -27,7 +27,7 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       await copyImage(request.info);
       break;
     case Type.CopyDirectory:
-      await copyDirectory(request.info);
+      copyDirectory();
       break;
     case Type.ViewMarkdown:
       await viewMarkdown();

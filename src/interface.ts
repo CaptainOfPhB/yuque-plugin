@@ -109,7 +109,7 @@ export interface RequestFromBackgroundScript {
  */
 export interface UserSerializer {
   id: number;
-  type: UserType;
+  type: string;
   space_id: number;
   account_id: number;
   login: string;
@@ -126,7 +126,44 @@ export interface UserSerializer {
   _serializer: string;
 }
 
-export enum UserType {
-  User = 'User',
-  Group = 'Group'
+/**
+ * Yuque repo model
+ */
+export interface BookSerializer {
+  content_updated_at: string;
+  created_at: string;
+  creator_id: number;
+  description: string;
+  id: number;
+  items_count: number;
+  likes_count: number;
+  name: string;
+  namespace: string;
+  public: PublicEnumeration;
+  slug: string;
+  type: BookType;
+  updated_at: string;
+  user: UserSerializer;
+  user_id: number;
+  watches_count: number;
+  _serializer: string;
+}
+
+export enum PublicEnumeration {
+  Public = 1,
+  Private = 0
+}
+
+export enum BookType {
+  Book = 'Book',
+  Sheet = 'Sheet',
+  Column = 'Column'
+}
+
+/**
+ * Yuque TOC model
+ */
+export interface TocSerializer {
+  url: string;
+  title: string;
 }
