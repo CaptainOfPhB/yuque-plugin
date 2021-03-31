@@ -1,6 +1,6 @@
 import { YuqueConfig } from '@/interface';
 import { message, notification } from 'antd';
-import { MessageMapping, Response, ResponseWithError } from '@/http/interface';
+import { MessageMapping, Response, ResponseWithError } from '@/request/interface';
 import Axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const axios = Axios.create();
@@ -28,7 +28,7 @@ axios.interceptors.response.use(undefined, function (error: AxiosError<ResponseW
   return error;
 });
 
-const Http = async <T>(option: AxiosRequestConfig | string): Promise<[false, T] | [true, string]> => {
+const request = async <T>(option: AxiosRequestConfig | string): Promise<[false, T] | [true, string]> => {
   void message.loading({ duration: 0, key: 'loading', content: '正在加载，请稍候...' });
   const normalizedOption = typeof option === 'string' ? { url: option } : option;
   return await axios(normalizedOption)
@@ -40,4 +40,4 @@ const Http = async <T>(option: AxiosRequestConfig | string): Promise<[false, T] 
     .finally(() => message.destroy('loading'));
 };
 
-export default Http;
+export default request;

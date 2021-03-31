@@ -1,7 +1,9 @@
-import Http from '@/http';
+import request from '@/request';
 
-export const getUser = async <T>() => Http<T>({ url: '/user' });
+export const getUser = async <T>() => request<T>('/user');
 
-export const getBooks = async <T>(userId: number) => Http<T>({ url: `/users/${userId}/repos` });
+export const getBooks = async <T>(userId: number) => request<T>(`/users/${userId}/repos`);
 
-export const getTOC = async <T>(namespace: string) => Http<T>({ url: `/repos/${namespace}/toc?depth=2` });
+export const getTOC = async <T>(namespace: string) => request<T>(`/repos/${namespace}/toc?depth=2`);
+
+export const getDoc = async <T>(namespace: string, slug: string) => request<T>(`/repos/${namespace}/docs/${slug}`);
