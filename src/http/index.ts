@@ -28,9 +28,10 @@ axios.interceptors.response.use(undefined, function (error: AxiosError<ResponseW
   return error;
 });
 
-const Http = async <T>(option: AxiosRequestConfig): Promise<[false, T] | [true, string]> => {
+const Http = async <T>(option: AxiosRequestConfig | string): Promise<[false, T] | [true, string]> => {
   void message.loading({ duration: 0, key: 'loading', content: '正在加载，请稍候...' });
-  return await axios(option)
+  const normalizedOption = typeof option === 'string' ? { url: option } : option;
+  return await axios(normalizedOption)
     .then((responseOrError: AxiosResponse<Response<T>> | AxiosError<ResponseWithError>) =>
       'data' in responseOrError
         ? ([false, responseOrError.data.data] as [false, T])
