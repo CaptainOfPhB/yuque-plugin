@@ -7,7 +7,7 @@ import { BookSerializer, TocSerializer, UserSerializer } from '@/interface';
 /**
  * Copy the TOC of book
  */
-function copyTOC() {
+function copyBookToc() {
   chrome.storage.sync.get(async function (store) {
     const [hasErr, books] = await getBooks<BookSerializer[]>((store.user as UserSerializer).id);
     if (hasErr) return message.error('获取知识库失败');
@@ -38,4 +38,4 @@ function copyTOC() {
   });
 }
 
-export default copyTOC;
+export default copyBookToc;

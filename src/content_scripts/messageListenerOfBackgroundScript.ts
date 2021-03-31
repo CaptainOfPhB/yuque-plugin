@@ -3,7 +3,7 @@ import { RequestFromBackgroundScript, Type } from '@/interface';
 
 import copyUrl from '@/actions/copyUrl';
 import copyLink from '@/actions/copyLink';
-import copyTOC from '@/actions/copyTOC';
+import copyBookToc from '@/actions/copyBookToc';
 import copyImage from '@/actions/copyImage';
 import viewHTML from '@/actions/viewHTML';
 import viewMarkdown from '@/actions/viewMarkdown';
@@ -26,8 +26,8 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
     case Type.CopyImage:
       await copyImage(request.info);
       break;
-    case Type.CopyDirectory:
-      copyTOC();
+    case Type.CopyBookToc:
+      copyBookToc();
       break;
     case Type.ViewMarkdown:
       await viewMarkdown();
