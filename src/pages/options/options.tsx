@@ -54,23 +54,6 @@ class Options extends React.Component<unknown, OptionsPageState> {
     });
   }
 
-  // onYuqueFormFinish = (fieldsValues: YuqueFormFieldsValue) => {
-  //   chrome.storage.sync.set({ yuqueConfig: fieldsValues }, async () => {
-  //     const [hasErr, userOrErrMsg] = await Service.getUser<UserSerializer>();
-  //     if (hasErr) {
-  //       chrome.storage.sync.set({ yuqueConfig: this.state.yuqueConfig });
-  //       return;
-  //     }
-  //     chrome.storage.sync.set({ user: userOrErrMsg });
-  //     this.yuqueForm.current?.setFieldsValue({ userName: (userOrErrMsg as UserSerializer).name });
-  //     const isSameUser = fieldsValues.userName && (userOrErrMsg as UserSerializer).name !== fieldsValues.userName;
-  //     notification.success({
-  //       message: '保存成功！',
-  //       description: isSameUser ? 'Access Token 所属用户与之前不一致，若您意为更改用户，请忽略此消息。' : undefined
-  //     });
-  //   });
-  // };
-  //
   onFormFinish = (
     formName: string,
     { values }: { values: YuqueFormFieldsValue | BasicFormFieldsValue | MenuFormFieldsValue }
@@ -271,13 +254,13 @@ class Options extends React.Component<unknown, OptionsPageState> {
             {Object.keys(menuConfig || {}).map((name: string) => {
               return (
                 <React.Fragment key={name}>
-                  <Col span={6} style={{ paddingTop: 4, margin: '0 10px', textAlign: 'right' }}>
-                    {TypeDescription[name as Type]}
-                  </Col>
-                  <Col span={1}>
+                  <Col span={2} style={{ textAlign: 'right' }}>
                     <Form.Item name={name} valuePropName='checked' labelCol={{ span: 6 }} wrapperCol={{ span: 18 }}>
                       <Checkbox />
                     </Form.Item>
+                  </Col>
+                  <Col span={6} style={{ paddingTop: 5 }}>
+                    {TypeDescription[name as Type]}
                   </Col>
                 </React.Fragment>
               );
