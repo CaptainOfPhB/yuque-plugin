@@ -167,3 +167,12 @@ export interface TocSerializer {
   url: string;
   title: string;
 }
+
+export interface DocSerializer {
+  slug: string;
+  body: string;
+  title: string;
+  body_lake: string;
+  description: string;
+  public: PublicEnumeration;
+}

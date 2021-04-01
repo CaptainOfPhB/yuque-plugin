@@ -1,6 +1,7 @@
-export interface Response<Data = unknown> {
+export interface Response<Data> {
   data: Data;
   meta?: Record<string, unknown>;
+  abilities?: Record<string, boolean>;
 }
 
 export interface ResponseWithError {
