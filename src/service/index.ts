@@ -9,3 +9,8 @@ export const getTOC = async <T>(namespace: string) => request<T>(`/repos/${names
 export const getDocs = async <T>(namespace: string) => request<T>(`/repos/${namespace}/docs`);
 
 export const getDoc = async <T>(namespace: string, slug: string) => request<T>(`/repos/${namespace}/docs/${slug}`);
+
+export const getUnsplashAccessKey = async <T>() => fetch('https://unsplash.deno.dev').then<T>(async r => r.json());
+
+export const getRandomPhoto = async <T>(accessKey: string) =>
+  fetch(`https://api.unsplash.com/photos/random?client_id=${accessKey}&w=800&h=800`).then<T>(async r => r.json());

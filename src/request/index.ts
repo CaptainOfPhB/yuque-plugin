@@ -1,7 +1,8 @@
 import { YuqueConfig } from '@/interface';
 import { message, notification } from 'antd';
-import { MessageMapping, Response, ResponseWithError } from '@/request/interface';
+import isAbsoluteURL from '@/helper/isAbsoluteURL';
 import Axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { MessageMapping, Response, ResponseWithError } from '@/request/interface';
 
 const axios = Axios.create();
 
@@ -13,7 +14,7 @@ axios.interceptors.request.use(async function (config: AxiosRequestConfig) {
     chrome.storage.sync.get(['yuqueConfig'], function (values) {
       const store = values as { yuqueConfig: YuqueConfig };
       config.headers['X-Auth-Token'] = store.yuqueConfig.accessToken;
-      config.url = 'https://www.yuque.com/api/v2' + config.url;
+      config.url = isAbsoluteURL(config.url) ? config.url : 'https://www.yuque.com/api/v2'.concat(config.url || '');
       resolve(config);
     });
   });

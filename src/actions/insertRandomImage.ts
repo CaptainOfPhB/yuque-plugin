@@ -1,12 +1,18 @@
 import { message } from 'antd';
 import underEditing from '@/helper/underEditing';
 import isArticlePage from '@/helper/isArticlePage';
+import { getUnsplashAccessKey, getRandomPhoto } from '@/service';
 import isCursorFocusedOnEditor from '@/helper/isCursorFocusedOnEditor';
 
 /**
  * Insert an random image from Bing
  */
 async function insertRandomImage() {
+  const { accessKey } = await getUnsplashAccessKey<{ accessKey: string }>();
+  const photo = await getRandomPhoto(accessKey);
+
+  console.log(photo);
+
   if (!isArticlePage()) {
     return message.error('该功能只可在文档页面使用！');
   }
