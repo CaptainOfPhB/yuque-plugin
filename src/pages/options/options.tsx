@@ -10,7 +10,7 @@ import {
   MenuFormFieldsValue
 } from '@/interface';
 import React from 'react';
-import * as Service from '@/service';
+import { getUser } from '@/service';
 import { CheckOutlined } from '@ant-design/icons';
 import { Row, Col, Card, Form, Input, Button, Checkbox, Skeleton, FormInstance, notification } from 'antd';
 
@@ -54,23 +54,18 @@ class Options extends React.Component<unknown, OptionsPageState> {
     });
   }
 
-  onFormFinish = (
-    formName: string,
-    { values }: { values: YuqueFormFieldsValue | BasicFormFieldsValue | MenuFormFieldsValue }
-  ) => {
+  onFormFinish = (formName: string, { values }: { values: YuqueFormFieldsValue }) => {
     switch (formName) {
       case 'yuque':
         chrome.storage.sync.set({ yuqueConfig: values }, async () => {
-          const [hasErr, userOrErrMsg] = await Service.getUser<UserSerializer>();
-          if (hasErr) {
+          const user = await getUser();
+          if (!user) {
             chrome.storage.sync.set({ yuqueConfig: this.state.yuqueConfig });
             return;
           }
-          chrome.storage.sync.set({ user: userOrErrMsg });
-          this.yuqueForm.current?.setFieldsValue({ userName: (userOrErrMsg as UserSerializer).name });
-          const isSameUser =
-            (values as YuqueFormFieldsValue).userName &&
-            (userOrErrMsg as UserSerializer).name !== (values as YuqueFormFieldsValue).userName;
+          chrome.storage.sync.set({ user });
+          this.yuqueForm.current?.setFieldsValue({ userName: user.name });
+          const isSameUser = values.userName && user.name !== (values as YuqueFormFieldsValue).userName;
           notification.success({
             message: '保存成功！',
             description: isSameUser ? 'Access Token 所属用户与之前不一致，若您意为更改用户，请忽略此消息。' : undefined

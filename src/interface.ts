@@ -176,3 +176,14 @@ export interface DocSerializer {
   description: string;
   public: PublicEnumeration;
 }
+
+export interface PhotoSerializer {
+  id: string;
+  user: {
+    name: string;
+  };
+  links: {
+    html: string;
+  };
+  alt_description: string;
+}

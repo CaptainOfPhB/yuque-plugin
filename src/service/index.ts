@@ -1,16 +1,31 @@
 import request from '@/request';
+import fetch from '@/request/fetch';
+import { BookSerializer, DocSerializer, PhotoSerializer, TocSerializer, UserSerializer } from '@/interface';
 
-export const getUser = async <T>() => request<T>('/user');
+export const getUser = async () => {
+  return request<UserSerializer>('/user');
+};
 
-export const getBooks = async <T>(userId: number) => request<T>(`/users/${userId}/repos`);
+export const getBooksBy = async (userId: number) => {
+  return request<BookSerializer[]>(`/users/${userId}/repos`);
+};
 
-export const getTOC = async <T>(namespace: string) => request<T>(`/repos/${namespace}/toc?depth=2`);
+export const getTocOfBookBy = async (namespace: string) => {
+  return request<TocSerializer[]>(`/repos/${namespace}/toc?depth=2`);
+};
 
-export const getDocs = async <T>(namespace: string) => request<T>(`/repos/${namespace}/docs`);
+export const getDocsOfBookBy = async (namespace: string) => {
+  return request<DocSerializer[]>(`/repos/${namespace}/docs`);
+};
 
-export const getDoc = async <T>(namespace: string, slug: string) => request<T>(`/repos/${namespace}/docs/${slug}`);
+export const getDocOfBookBy = async (namespace: string, slug: string) => {
+  return request<DocSerializer>(`/repos/${namespace}/docs/${slug}`);
+};
 
-export const getUnsplashAccessKey = async <T>() => fetch('https://unsplash.deno.dev').then<T>(async r => r.json());
+export const getUnsplashAccessKey = async () => {
+  return fetch<{ accessKey: string }>('https://unsplash.deno.dev');
+};
 
-export const getRandomPhoto = async <T>(accessKey: string) =>
-  fetch(`https://api.unsplash.com/photos/random?client_id=${accessKey}&w=800&h=800`).then<T>(async r => r.json());
+export const getRandomPhoto = async (accessKey: string) => {
+  return fetch<PhotoSerializer>(`https://api.unsplash.com/photos/random?client_id=${accessKey}&w=800&h=400`);
+};

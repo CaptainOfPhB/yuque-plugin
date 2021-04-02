@@ -1,18 +1,18 @@
 import React from 'react';
 import { message, Modal, Select } from 'antd';
-import { getBooks, getTOC } from '@/service';
+import { getBooksBy, getTocOfBookBy } from '@/service';
 import copyToClipboard from '@/helper/copyToClipboard';
-import { BookSerializer, TocSerializer, UserSerializer } from '@/interface';
+import { BookSerializer, UserSerializer } from '@/interface';
 
 let namespace = '';
 
 async function onConfirm() {
   if (!namespace) return message.error('请选择一个知识库');
 
-  const [hasErr, toc] = await getTOC<TocSerializer[]>(namespace);
-  if (hasErr) return message.error('获取知识库目录结构失败');
+  const toc = await getTocOfBookBy(namespace);
+  if (!toc) return message.error('获取知识库目录结构失败');
 
-  const normalizedToc = (toc as TocSerializer[])
+  const normalizedToc = toc
     .map(article => `[${article.title}](https://www.yuque.com/${namespace}/${article.url})<br/>`)
     .join('');
 
@@ -21,8 +21,8 @@ async function onConfirm() {
 
 function copyBookToc() {
   chrome.storage.sync.get(async function (store) {
-    const [hasErr, books] = await getBooks<BookSerializer[]>((store.user as UserSerializer).id);
-    if (hasErr) return message.error('获取知识库失败');
+    const books = await getBooksBy((store.user as UserSerializer).id);
+    if (!books) return message.error('获取知识库失败');
 
     Modal.confirm({
       icon: null,

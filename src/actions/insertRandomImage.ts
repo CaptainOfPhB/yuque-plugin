@@ -1,41 +1,21 @@
 import { message } from 'antd';
-import underEditing from '@/helper/underEditing';
-import isArticlePage from '@/helper/isArticlePage';
+import copyToClipboard from '@/helper/copyToClipboard';
 import { getUnsplashAccessKey, getRandomPhoto } from '@/service';
-import isCursorFocusedOnEditor from '@/helper/isCursorFocusedOnEditor';
 
 /**
- * Insert an random image from Bing
+ * Insert an random image from Unsplash
  */
 async function insertRandomImage() {
-  const { accessKey } = await getUnsplashAccessKey<{ accessKey: string }>();
-  const photo = await getRandomPhoto(accessKey);
+  const response = await getUnsplashAccessKey();
+  if (!response) return message.error('获取 Unsplash Access Key 失败');
 
-  console.log(photo);
+  const photo = await getRandomPhoto(response!.accessKey);
+  if (!photo) return message.error('获取 Unsplash 随机图片失败');
 
-  if (!isArticlePage()) {
-    return message.error('该功能只可在文档页面使用！');
-  }
-  if (!underEditing()) {
-    return message.error('该功能只可在编辑文档时使用！');
-  }
-  if (!isCursorFocusedOnEditor()) {
-    return message.error('请将光标聚焦在编辑区后再使用！');
-  }
+  const markdownPhoto = `![${photo.alt_description} - Photo by ${photo.user.name} on Unsplash](https://source.unsplash.com/${photo.id}/800x600)`;
+  const markdownLink = `[${markdownPhoto}](${photo.links.html})`;
 
-  const img = document.createElement('img');
-  img.setAttribute('alt', 'random image from Bing');
-  img.setAttribute('src', 'https://bing.ioliu.cn/v1/rand?t=' + new Date().getTime().toString());
-
-  const focusNode = document.getSelection()!.focusNode;
-  const topElement = document.querySelector('.lake-content-editor-core');
-
-  let parentElement = focusNode?.parentElement;
-  while (!parentElement?.getAttribute('data-lake-id') && parentElement?.parentElement !== topElement) {
-    parentElement = parentElement?.parentElement || null;
-  }
-
-  topElement!.insertBefore(img, parentElement.nextSibling);
+  await copyToClipboard(markdownLink, '随机图片');
 }
 
 export default insertRandomImage;
