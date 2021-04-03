@@ -1,4 +1,5 @@
-import Menu from '@/config/menu';
+import store from '@/store';
+import ContextMenu from '@/config/contextMenu';
 
 import Tab = chrome.tabs.Tab;
 import MessageSender = chrome.runtime.MessageSender;
@@ -13,57 +14,58 @@ if (!chrome.contextMenus.onClicked.hasListener(onClickedCallback)) {
   chrome.contextMenus.onClicked.addListener(onClickedCallback);
 }
 
-function messageListener(request: RequestCreateContextMenu, _sender: MessageSender, sendResponse: () => void) {
+async function messageListener(request: RequestCreateContextMenu, _sender: MessageSender, sendResponse: () => void) {
   if (request.action === 'createContextMenu') {
-    chrome.storage.sync.get(function (store) {
-      chrome.contextMenus.removeAll(function createContextMenu() {
-        chrome.contextMenus.create({
-          id: 'yuque-plugin',
-          contexts: ['all'],
-          title: 'Yuque plugin - 语雀插件'
-        });
+    const menu = await store.get<Record<string, boolean>>('menuConfig');
+    if (!menu) return;
 
-        Menu.forEach((item: MenuItem, index: number) => {
-          if (item.type === Type.Separator) {
+    chrome.contextMenus.removeAll(function createContextMenu() {
+      chrome.contextMenus.create({
+        id: 'yuque-plugin',
+        contexts: ['all'],
+        title: 'Yuque plugin - 语雀插件'
+      });
+
+      ContextMenu.forEach((item: MenuItem, index: number) => {
+        if (item.type === Type.Separator) {
+          chrome.contextMenus.create({
+            contexts: ['all'],
+            type: 'separator',
+            id: 'separator' + index,
+            parentId: 'yuque-plugin'
+          });
+        } else {
+          if (menu[item.type]) {
             chrome.contextMenus.create({
-              contexts: ['all'],
-              type: 'separator',
-              id: 'separator' + index,
-              parentId: 'yuque-plugin'
+              id: item.type,
+              contexts: item.contexts,
+              parentId: 'yuque-plugin',
+              title: TypeDescription[item.type],
+              visible: item.onlyRunOnYuquePage ? request.isYuquePage : true
             });
-          } else {
-            if (store.menuConfig[item.type] !== false) {
-              chrome.contextMenus.create({
-                id: item.type,
-                contexts: item.contexts,
-                parentId: 'yuque-plugin',
-                title: TypeDescription[item.type],
-                visible: item.onlyRunOnYuquePage ? request.isYuquePage : true
-              });
-            }
           }
-        });
+        }
+      });
 
-        chrome.contextMenus.create({
-          id: 'separator',
-          contexts: ['all'],
-          type: 'separator',
-          parentId: 'yuque-plugin'
-        });
+      chrome.contextMenus.create({
+        id: 'separator',
+        contexts: ['all'],
+        type: 'separator',
+        parentId: 'yuque-plugin'
+      });
 
-        chrome.contextMenus.create({
-          id: Type.Setting,
-          contexts: ['all'],
-          parentId: 'yuque-plugin',
-          title: TypeDescription.Setting
-        });
+      chrome.contextMenus.create({
+        id: Type.Setting,
+        contexts: ['all'],
+        parentId: 'yuque-plugin',
+        title: TypeDescription.Setting
+      });
 
-        chrome.contextMenus.create({
-          id: Type.Help,
-          contexts: ['all'],
-          parentId: 'yuque-plugin',
-          title: TypeDescription.Help
-        });
+      chrome.contextMenus.create({
+        id: Type.Help,
+        contexts: ['all'],
+        parentId: 'yuque-plugin',
+        title: TypeDescription.Help
       });
     });
   }

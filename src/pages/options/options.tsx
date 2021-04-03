@@ -10,9 +10,10 @@ import {
   MenuFormFieldsValue
 } from '@/interface';
 import React from 'react';
+import store from '@/store';
 import { getUser } from '@/service';
 import { CheckOutlined } from '@ant-design/icons';
-import { Row, Col, Card, Form, Input, Button, Checkbox, Skeleton, FormInstance, notification } from 'antd';
+import { Row, Col, Card, Form, Input, Button, Checkbox, Skeleton, FormInstance, notification, message } from 'antd';
 
 import './options.less';
 
@@ -39,48 +40,55 @@ class Options extends React.Component<unknown, OptionsPageState> {
     basicConfig: undefined
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({ loading: true });
-    chrome.storage.sync.get(store => {
-      this.setState(
-        {
-          user: store.user,
-          menuConfig: store.menuConfig,
-          yuqueConfig: store.yuqueConfig,
-          basicConfig: store.basicConfig
-        },
-        () => this.setState({ loading: false })
-      );
-    });
+    const [yuqueConfig, basicConfig, menuConfig, user] = await Promise.all([
+      store.get<YuqueConfig>('yuqueConfig'),
+      store.get<BasicConfig>('basicConfig'),
+      store.get<MenuConfig>('menuConfig'),
+      store.get<UserSerializer>('user')
+    ]);
+    this.setState({ user: user, menuConfig, yuqueConfig, basicConfig }, () => this.setState({ loading: false }));
   }
 
-  onFormFinish = (formName: string, { values }: { values: YuqueFormFieldsValue }) => {
+  onFormFinish = async (formName: string, { values }: { values: YuqueFormFieldsValue }) => {
     switch (formName) {
       case 'yuque':
-        chrome.storage.sync.set({ yuqueConfig: values }, async () => {
+        {
+          const success1 = await store.set('yuqueConfig', values);
+          if (!success1) return message.success('语雀配置保存失败');
+
           const user = await getUser();
           if (!user) {
-            chrome.storage.sync.set({ yuqueConfig: this.state.yuqueConfig });
-            return;
+            const success = await store.set('yuqueConfig', this.state.yuqueConfig!);
+            return !success && message.error('语雀配置保存失败');
           }
-          chrome.storage.sync.set({ user });
+
           this.yuqueForm.current?.setFieldsValue({ userName: user.name });
-          const isSameUser = values.userName && user.name !== (values as YuqueFormFieldsValue).userName;
+
+          const previousUser = await store.get<UserSerializer>('user');
+
+          const success2 = await store.set('user', user);
+          if (!success2) return message.success('用户信息保存失败');
+
+          const isSameUser = previousUser && previousUser.id === user.id;
           notification.success({
             message: '保存成功！',
             description: isSameUser ? 'Access Token 所属用户与之前不一致，若您意为更改用户，请忽略此消息。' : undefined
           });
-        });
+        }
         break;
       case 'basic':
-        chrome.storage.sync.set({ basicConfig: values }, function () {
-          notification.success({ message: '保存成功！' });
-        });
+        {
+          const success = await store.set('basicConfig', values);
+          success ? notification.success({ message: '保存成功！' }) : void message.error('基础配置保存失败');
+        }
         break;
       case 'menu':
-        chrome.storage.sync.set({ menuConfig: values }, function () {
-          notification.success({ message: '保存成功！' });
-        });
+        {
+          const success = await store.set('menuConfig', values);
+          success ? notification.success({ message: '保存成功！' }) : void message.error('菜单配置保存失败');
+        }
         break;
     }
   };

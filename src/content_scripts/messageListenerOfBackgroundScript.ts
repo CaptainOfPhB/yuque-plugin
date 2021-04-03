@@ -27,10 +27,10 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       await copyImage(request.info);
       break;
     case Type.CopyBookToc:
-      copyBookToc();
+      await copyBookToc();
       break;
     case Type.CopyDocToc:
-      copyDocToc();
+      await copyDocToc();
       break;
     case Type.ViewMarkdown:
       await viewMarkdown();

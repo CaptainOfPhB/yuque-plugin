@@ -13,14 +13,14 @@ async function copyToClipboard(data: string, msg?: string) {
     } else {
       execCopy(data);
     }
-    void message.success(`已复制${msg}至粘贴板！`);
+    void message.success(`已复制${msg}至粘贴板`);
   } catch {
     try {
       execCopy(data);
-      void message.success(`已复制${msg}至粘贴板！`);
+      void message.success(`已复制${msg}至粘贴板`);
     } catch (e) {
       console.error(e);
-      void message.error(`复制${msg}失败！打开控制台查看原因。`);
+      void message.error(`复制${msg}失败！打开控制台查看原因`);
     }
   }
 }

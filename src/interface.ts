@@ -45,10 +45,10 @@ export enum Type {
 export enum TypeDescription {
   Help = '帮助和反馈',
   Setting = '设置插件',
-  CopyLink = '复制链接',
   CopyImage = '复制图片',
   CopyUrl = '复制页面链接',
   Separator = '菜单分割线',
+  CopyLink = '复制链接地址',
   CreateDiary = '生成日记',
   CopyDocToc = '复制文档大纲',
   ViewHTML = '查看 HTML 结构',
@@ -62,6 +62,8 @@ export enum TypeDescription {
   ViewMarkdown = '查看 Markdown 结构',
   PlayAmbienceSound = '播放环境声（白噪声）'
 }
+
+export type StoreKey = 'yuqueConfig' | 'basicConfig' | 'menuConfig' | 'user';
 
 export type YuqueConfig = Partial<{
   repoName: string;
@@ -122,6 +124,8 @@ export interface UserSerializer {
   created_at: string;
   updated_at: string;
   _serializer: string;
+
+  [key: string]: string | number;
 }
 
 /**

@@ -1,11 +1,11 @@
 import { MenuItem, Type } from '@/interface';
 
-const Menu: MenuItem[] = [
+const ContextMenu: MenuItem[] = [
   { type: Type.CopyUrl, contexts: ['all'] },
   { type: Type.CopyImage, contexts: ['image'] },
   { type: Type.CopyLink, contexts: ['link'] },
-  { type: Type.CopyBookToc, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.CopyDocToc, onlyRunOnYuquePage: true, contexts: ['all'] },
+  { type: Type.CopyBookToc, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.Separator },
   { type: Type.ViewMarkdown, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.ViewHTML, onlyRunOnYuquePage: true, contexts: ['all'] },
@@ -22,4 +22,4 @@ const Menu: MenuItem[] = [
   { type: Type.PlayAmbienceSound, contexts: ['all'] }
 ];
 
-export default Menu;
+export default ContextMenu;
