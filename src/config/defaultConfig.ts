@@ -12,7 +12,6 @@ export const Basic_Config: BasicConfig = {
 export const Menu_Config: MenuConfig = {
   CopyUrl: true,
   CopyImage: true,
-  Indent: true,
   ViewHTML: true,
   CopyLink: true,
   CopyDocToc: true,

@@ -23,7 +23,6 @@ export type ContextType =
 
 export enum Type {
   Help = 'Help',
-  Indent = 'Indent',
   CopyUrl = 'CopyUrl',
   Setting = 'Setting',
   ViewHTML = 'ViewHTML',
@@ -44,7 +43,6 @@ export enum Type {
 }
 
 export enum TypeDescription {
-  Indent = '首行缩进',
   Help = '帮助和反馈',
   Setting = '设置插件',
   CopyLink = '复制链接',

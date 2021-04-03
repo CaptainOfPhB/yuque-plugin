@@ -12,7 +12,6 @@ const Menu: MenuItem[] = [
   { type: Type.Separator },
   { type: Type.InsertRandomImage, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.InsertSummaryInfo, onlyRunOnYuquePage: true, contexts: ['all'] },
-  { type: Type.Indent, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.InsertBlankLine, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.InsertTooltip, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.InsertEmoji, contexts: ['all'] },

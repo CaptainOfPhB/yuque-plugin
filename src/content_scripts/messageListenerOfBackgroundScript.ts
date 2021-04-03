@@ -9,7 +9,6 @@ import copyDocToc from '@/actions/copyDocToc';
 import viewHTML from '@/actions/viewHTML';
 import viewMarkdown from '@/actions/viewMarkdown';
 import insertRandomImage from '@/actions/insertRandomImage';
-import indentTheFirstLineOfParagraph from '@/actions/indentTheFirstLineOfParagraph';
 import openOptionsPage from '@/actions/openOptionsPage';
 
 chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
@@ -41,9 +40,6 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       break;
     case Type.InsertRandomImage:
       await insertRandomImage();
-      break;
-    case Type.Indent:
-      await indentTheFirstLineOfParagraph();
       break;
     case Type.Setting:
       openOptionsPage();
