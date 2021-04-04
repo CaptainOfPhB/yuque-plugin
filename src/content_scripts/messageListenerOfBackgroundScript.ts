@@ -12,6 +12,7 @@ import insertRandomImage from '@/actions/insertRandomImage';
 import openOptionsPage from '@/actions/openOptionsPage';
 import insertTooltip from '@/actions/insertTooltip';
 import insertSummaryInfo from '@/actions/insertSummaryInfo';
+import insertBlankLine from '@/actions/insertBlankLine';
 
 chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
   request: RequestFromBackgroundScript,
@@ -45,6 +46,9 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       break;
     case Type.InsertSummaryInfo:
       await insertSummaryInfo();
+      break;
+    case Type.InsertBlankLine:
+      await insertBlankLine();
       break;
     case Type.InsertTooltip:
       insertTooltip();
