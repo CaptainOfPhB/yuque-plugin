@@ -58,7 +58,7 @@ async function insertSummaryInfo() {
 
   const editor = document.querySelector('.lake-content-editor-core')!;
 
-  const wordsCount = (editor.textContent || '').replace(/(?:\r\n|\r|\n)/g, '').length;
+  const wordsCount = (editor.textContent || '').replace(/(?:\r\n|\r|\n|\s)/g, '').length;
   if (!wordsCount) return message.error('文档没有内容，请先写一些文字吧');
 
   const config = await store.get<{ readingSpeed: number }>('basicConfig', ['readingSpeed']);
