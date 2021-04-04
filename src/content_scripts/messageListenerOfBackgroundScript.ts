@@ -10,6 +10,7 @@ import viewHTML from '@/actions/viewHTML';
 import viewMarkdown from '@/actions/viewMarkdown';
 import insertRandomImage from '@/actions/insertRandomImage';
 import openOptionsPage from '@/actions/openOptionsPage';
+import insertTooltip from '@/actions/insertTooltip';
 
 chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
   request: RequestFromBackgroundScript,
@@ -40,6 +41,9 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       break;
     case Type.InsertRandomImage:
       await insertRandomImage();
+      break;
+    case Type.InsertTooltip:
+      insertTooltip();
       break;
     case Type.Setting:
       openOptionsPage();
