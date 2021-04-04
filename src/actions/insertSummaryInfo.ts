@@ -4,6 +4,8 @@ import underEditing from '@/helper/underEditing';
 import randomLakeId from '@/helper/randomLakeId';
 import isArticlePage from '@/helper/isArticlePage';
 
+const SUMMARY_CLASSNAME = 'summary-info-from-yuque-plugin';
+
 function createDivider() {
   const div = document.createElement('div');
   div.setAttribute('data-card-type', 'block');
@@ -42,7 +44,7 @@ function createParagraph(summary: string) {
   const lakeId = randomLakeId(32);
   const p = document.createElement('p');
   p.setAttribute('data-lake-id', lakeId);
-  p.innerHTML = `<span class="lake-fontsize-9" style="color: rgb(140, 140, 140);">${summary}</span>`;
+  p.innerHTML = `<span class="${SUMMARY_CLASSNAME} lake-fontsize-9" style="color: rgb(140, 140, 140);">${summary}</span>`;
   return p;
 }
 
@@ -65,8 +67,13 @@ async function insertSummaryInfo() {
   const time = Math.round(wordsCount / config.readingSpeed);
   const summary = ` 本文约 ${wordsCount} 字，阅读预计需要 ${time} 分钟`;
 
-  editor.prepend(createDivider());
-  editor.prepend(createParagraph(summary));
+  const summaryContainer = document.querySelector(`.${SUMMARY_CLASSNAME}`);
+  if (summaryContainer) {
+    summaryContainer.innerHTML = summary;
+  } else {
+    editor.prepend(createDivider());
+    editor.prepend(createParagraph(summary));
+  }
 
   void message.success('文档统计信息插入成功');
 }
