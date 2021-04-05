@@ -1,5 +1,6 @@
 import request from '@/request';
 import fetch from '@/request/fetch';
+import { ParamsOfCreateDoc } from '@/service/interface';
 import { BookSerializer, DocSerializer, PhotoSerializer, TocSerializer, UserSerializer } from '@/interface';
 
 export const getUser = async () => {
@@ -20,6 +21,15 @@ export const getDocsOfBookBy = async (namespace: string) => {
 
 export const getDocOfBookBy = async (namespace: string, slug: string) => {
   return request<DocSerializer>(`/repos/${namespace}/docs/${slug}`);
+};
+
+export const createDocWith = async (params: ParamsOfCreateDoc) => {
+  const { namespace, ...restParams } = params;
+  return request<DocSerializer>({
+    method: 'POST',
+    data: restParams,
+    url: `/repos/${namespace}/docs`
+  });
 };
 
 export const getUnsplashAccessKey = async () => {

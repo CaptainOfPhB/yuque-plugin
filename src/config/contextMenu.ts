@@ -17,7 +17,7 @@ const ContextMenu: MenuItem[] = [
   { type: Type.InsertEmoji, contexts: ['all'] },
   { type: Type.Separator },
   { type: Type.CreateMindMapping, onlyRunOnYuquePage: true, contexts: ['all'] },
-  { type: Type.CreateDiary, onlyRunOnYuquePage: true, contexts: ['all'] },
+  { type: Type.CreateShorthand, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.Separator },
   { type: Type.PlayAmbienceSound, contexts: ['all'] }
 ];

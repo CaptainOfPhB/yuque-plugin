@@ -10,7 +10,6 @@ class ChromeStorage {
     return new Promise(function (resolve) {
       chrome.storage.sync.get(function (store) {
         if (!store[storeKey]) {
-          void message.error('未找到相关配置，请配置插件后再使用');
           resolve(undefined);
           return;
         }
