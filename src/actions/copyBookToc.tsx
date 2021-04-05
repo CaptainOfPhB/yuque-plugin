@@ -32,6 +32,7 @@ async function copyBookToc() {
     okText: '复制',
     onOk: onConfirm,
     cancelText: '取消',
+    maskClosable: true,
     title: '请选择知识库',
     content: (
       <Select

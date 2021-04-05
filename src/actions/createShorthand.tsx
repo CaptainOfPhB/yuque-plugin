@@ -58,6 +58,7 @@ async function createShorthand() {
     okText: '生成',
     onOk: onConfirm,
     cancelText: '取消',
+    maskClosable: true,
     content: (
       <Form<FieldsValue> ref={form} layout='vertical'>
         <Form.Item name='namespace' label='知识库' rules={[{ required: true, message: '请选择知识库' }]}>
