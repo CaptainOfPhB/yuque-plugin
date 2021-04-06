@@ -33,10 +33,14 @@ function createEmoji(emojiUrl: string) {
 }
 
 function onAddEmoji(url: string) {
-  console.log(selection?.focusNode);
+  selection?.collapseToStart();
+  const range = selection?.getRangeAt(0);
 
   const emoji = createEmoji(url);
-  const focusNode = selection!.focusNode!;
+  const focusNode =
+    !selection!.focusOffset && selection?.focusNode?.nodeType === 1
+      ? selection!.focusNode!.previousSibling!
+      : selection!.focusNode!;
   const parentElement = focusNode.parentElement!;
 
   if (focusNode.nodeType === 3) {
@@ -48,36 +52,59 @@ function onAddEmoji(url: string) {
     parentElement.appendChild(prefixSpan);
     parentElement.appendChild(emoji);
     parentElement.appendChild(suffixSpan);
-    const range = selection!.getRangeAt(0);
-    range.setStartAfter(emoji);
+    range?.setStartBefore(emoji.nextSibling!);
   }
 
   if (focusNode.nodeType === 1) {
     let target = focusNode.childNodes[0];
+    const length = focusNode.childNodes.length;
 
     if (!target) {
-      console.log('no child');
       focusNode.appendChild(emoji);
+      range?.setStartAfter(emoji);
+      range?.collapse(true);
+      return Modal.destroyAll();
     }
 
     if (target.nodeName === 'BR') {
-      console.log('child is br');
       focusNode.replaceChild(emoji, target);
-      // focusNode.appendChild(emoji);
+      range?.setStartAfter(emoji);
+      range?.collapse(true);
+      return Modal.destroyAll();
     }
 
     if (target.nodeName === 'IMG') {
-      console.log('child is img');
       parentElement.insertBefore(emoji, target.nextSibling);
+      range?.setStartAfter(emoji);
+      range?.collapse(true);
+      return Modal.destroyAll();
     }
 
-    if (target.nodeName !== 'BR ' && target.nodeName !== 'IMG') {
-      while (target.childNodes[0] && target.childNodes[0].nodeName !== 'BR') {
-        target = target.childNodes[0];
-      }
-      target.replaceChild(emoji, target.childNodes[0]);
-      // target.appendChild(emoji);
+    if (target.nodeName === '#text') {
+      const prefixSpan = document.createElement('span');
+      prefixSpan.innerHTML = target.textContent!.slice();
+      focusNode.replaceChild(prefixSpan, target);
+      focusNode.appendChild(emoji);
+      range?.setStartAfter(emoji);
+      range?.collapse(true);
+      return Modal.destroyAll();
     }
+
+    if (target.nodeName === 'SPAN' && length === 1) {
+      focusNode.appendChild(emoji);
+      range?.setStartAfter(emoji);
+      range?.collapse(true);
+      return Modal.destroyAll();
+    }
+
+    while (target.childNodes[0] && target.childNodes[0].nodeName !== 'BR') {
+      target = target.childNodes[0];
+    }
+    target.replaceChild(emoji, target.childNodes[0]);
+    range?.setStartAfter(emoji);
+    range?.collapse(true);
+
+    Modal.destroyAll();
   }
 }
 
