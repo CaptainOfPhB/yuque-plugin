@@ -1,9 +1,11 @@
 import React from 'react';
 import { message, Modal, Radio, Tabs } from 'antd';
-import { YUQUE, YELLOW_FACE } from '@/config/emoticons';
+import { YUQUE, YELLOW_FACE, TV, HOT_WORDS } from '@/config/emoticons';
 
 enum Tab {
+  TV = 'TV',
   Yuque = 'Yuque',
+  HotWords = 'HotWords',
   YellowFace = 'YellowFace'
 }
 
@@ -18,9 +20,7 @@ let selection: Selection | null = null;
 
 function Wrapper(props: React.PropsWithChildren<unknown>) {
   return (
-    <div
-      style={{ height: '100%', overflow: 'scroll', display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap' }}
-    >
+    <div style={{ height: 300, overflow: 'scroll', display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap' }}>
       {props.children}
     </div>
   );
@@ -52,7 +52,9 @@ function onAddEmoji(url: string) {
     parentElement.appendChild(prefixSpan);
     parentElement.appendChild(emoji);
     parentElement.appendChild(suffixSpan);
-    range?.setStartBefore(emoji.nextSibling!);
+    range?.setStartAfter(emoji);
+    range?.collapse(true);
+    return Modal.destroyAll();
   }
 
   if (focusNode.nodeType === 1) {
@@ -160,7 +162,36 @@ async function insertEmoji() {
                 alt='emoji'
                 width={24}
                 height={24}
-                crossOrigin='anonymous'
+                style={{ margin: 4, cursor: 'pointer' }}
+                onClick={onAddEmoji.bind(null, src)}
+              />
+            ))}
+          </Wrapper>
+        </Tabs.TabPane>
+        <Tabs.TabPane tab={<img src={TV[0]} alt='小电视' width={24} height={24} />} key={Tab.TV}>
+          <Wrapper>
+            {TV.map(src => (
+              <img
+                key={src}
+                src={src}
+                alt='emoji'
+                width={60}
+                height={60}
+                style={{ margin: 4, cursor: 'pointer' }}
+                onClick={onAddEmoji.bind(null, src)}
+              />
+            ))}
+          </Wrapper>
+        </Tabs.TabPane>
+        <Tabs.TabPane tab={<img src={HOT_WORDS[0]} alt='热词' width={24} height={24} />} key={Tab.HotWords}>
+          <Wrapper>
+            {HOT_WORDS.map(src => (
+              <img
+                key={src}
+                src={src}
+                alt='emoji'
+                width={60}
+                height={60}
                 style={{ margin: 4, cursor: 'pointer' }}
                 onClick={onAddEmoji.bind(null, src)}
               />
