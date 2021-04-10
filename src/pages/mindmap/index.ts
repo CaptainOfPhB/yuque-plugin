@@ -1,7 +1,11 @@
 import store from '@/store';
 import { message } from 'antd';
 import TurndownService from 'turndown';
+import * as markmap from 'markmap-view';
+import { Transformer } from 'markmap-lib';
 import { replaceCardElement, replacePElement } from '@/helper/replaceHtmlElement';
+
+import './mindmap.less';
 
 const turndownService = new TurndownService({ codeBlockStyle: 'fenced' });
 
@@ -14,12 +18,20 @@ turndownService.addRule('pre', {
   }
 });
 
+const transformer = new Transformer();
+const { Markmap, loadCSS, loadJS } = markmap;
+
 void (async function init() {
   const html = await store.get<{ content: string }>('html', ['content']);
   if (!html) return message.error('文档内容不存在');
-  const document = createDocument(html.content);
-  const markdown = turndownService.turndown(document.body);
-  console.log(markdown);
+  const virtualDocument = createDocument(html.content);
+  const markdown = turndownService.turndown(virtualDocument.body);
+  const { root, features } = transformer.transform(markdown);
+  const { styles, scripts } = transformer.getUsedAssets(features);
+  if (styles) loadCSS(styles);
+  if (scripts) void loadJS(scripts, { getMarkmap: () => markmap });
+  const svgElement = document.querySelector<SVGAElement>('#mind-map')!;
+  Markmap.create(svgElement, undefined, root);
 })();
 
 function createDocument(html: string) {
