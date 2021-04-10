@@ -23,6 +23,7 @@ module.exports = {
   entry: {
     popup: resolve('../src/pages/popup/index.tsx'),
     options: resolve('../src/pages/options/index.tsx'),
+    mindmap: resolve('../src/pages/mindmap/index.ts'),
     background: resolve('../src/background/index.ts'),
     content_scripts: resolve('../src/content_scripts/index.ts')
   },
@@ -118,6 +119,13 @@ module.exports = {
       chunks: ['options'],
       filename: 'options.html',
       template: resolve('../public/options.html'),
+      favicon: resolve('../src/images/yuque_32.png')
+    }),
+    new HtmlWebpackPlugin({
+      inject: true,
+      chunks: ['mindmap'],
+      filename: 'mindmap.html',
+      template: resolve('../public/mindmap.html'),
       favicon: resolve('../src/images/yuque_32.png')
     }),
     new MiniCssExtractPlugin(),
