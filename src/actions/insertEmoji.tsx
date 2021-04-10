@@ -39,11 +39,11 @@ function onAddEmoji(url: string) {
   const emoji = createEmoji(url);
   const focusNode =
     !selection!.focusOffset && selection?.focusNode?.nodeType === 1
-      ? selection!.focusNode!.previousSibling!
+      ? selection!.focusNode!.previousSibling || selection!.focusNode
       : selection!.focusNode!;
-  const parentElement = focusNode.parentElement!;
+  const parentElement = focusNode?.parentElement;
 
-  if (focusNode.nodeType === 3) {
+  if (focusNode?.nodeType === 3 && parentElement) {
     const prefixSpan = document.createElement('span');
     prefixSpan.innerHTML = parentElement.textContent!.slice(0, selection!.focusOffset);
     const suffixSpan = document.createElement('span');
@@ -57,12 +57,12 @@ function onAddEmoji(url: string) {
     return Modal.destroyAll();
   }
 
-  if (focusNode.nodeType === 1) {
+  if (focusNode?.nodeType === 1) {
     let target = focusNode.childNodes[0];
     const length = focusNode.childNodes.length;
 
     if (!target) {
-      focusNode.appendChild(emoji);
+      focusNode?.appendChild(emoji);
       range?.setStartAfter(emoji);
       range?.collapse(true);
       return Modal.destroyAll();
@@ -75,7 +75,7 @@ function onAddEmoji(url: string) {
       return Modal.destroyAll();
     }
 
-    if (target.nodeName === 'IMG') {
+    if (target.nodeName === 'IMG' && parentElement) {
       parentElement.insertBefore(emoji, target.nextSibling);
       range?.setStartAfter(emoji);
       range?.collapse(true);
