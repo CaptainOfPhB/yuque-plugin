@@ -73,7 +73,7 @@ class Options extends React.Component<unknown, OptionsPageState> {
           const success2 = await store.set('user', user);
           if (!success2) return message.success('用户信息保存失败');
 
-          const isSameUser = this.state.user && this.state.user.id === user.id;
+          const isSameUser = !this.state.user || this.state.user.id === user.id;
           notification.success({
             message: '保存成功！',
             description: !isSameUser ? 'Access Token 所属用户与之前不一致，若您意为更改用户，请忽略此消息。' : undefined
