@@ -40,15 +40,19 @@ class Options extends React.Component<unknown, OptionsPageState> {
     basicConfig: undefined
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     this.setState({ loading: true });
-    const [yuqueConfig, basicConfig, menuConfig, user] = await Promise.all([
-      store.get<YuqueConfig>('yuqueConfig'),
-      store.get<BasicConfig>('basicConfig'),
-      store.get<MenuConfig>('menuConfig'),
-      store.get<UserSerializer>('user')
-    ]);
-    this.setState({ user: user, menuConfig, yuqueConfig, basicConfig }, () => this.setState({ loading: false }));
+    chrome.storage.sync.get(store => {
+      this.setState(
+        {
+          user: store.user,
+          menuConfig: store.menuConfig,
+          yuqueConfig: store.yuqueConfig,
+          basicConfig: store.basicConfig
+        },
+        () => this.setState({ loading: false })
+      );
+    });
   }
 
   onFormFinish = async (formName: string, { values }: { values: YuqueFormFieldsValue }) => {
@@ -66,12 +70,10 @@ class Options extends React.Component<unknown, OptionsPageState> {
 
           this.yuqueForm.current?.setFieldsValue({ userName: user.name });
 
-          const previousUser = await store.get<UserSerializer>('user');
-
           const success2 = await store.set('user', user);
           if (!success2) return message.success('用户信息保存失败');
 
-          const isSameUser = previousUser && previousUser.id === user.id;
+          const isSameUser = this.state.user && this.state.user.id === user.id;
           notification.success({
             message: '保存成功！',
             description: !isSameUser ? 'Access Token 所属用户与之前不一致，若您意为更改用户，请忽略此消息。' : undefined

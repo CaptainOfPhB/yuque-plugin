@@ -1,9 +1,8 @@
 import React from 'react';
 import store from '@/store';
-import { DocSerializer } from '@/interface';
-import copyToClipboard from '@/helper/copyToClipboard';
-import { getBooksBy, getDocOfBookBy, getDocsOfBookBy } from '@/service';
+import { DocSerializer, RequestOpenMindMapPage } from '@/interface';
 import { Form, FormInstance, Input, message, Modal, Select } from 'antd';
+import { getBooksBy, getDocOfBookBy, getDocsOfBookBy } from '@/service';
 
 interface FieldsValue {
   slug: string;
@@ -30,26 +29,15 @@ async function onConfirm() {
   const values = await form.current?.validateFields();
 
   const doc = await getDocOfBookBy(values!.namespace, values!.slug);
-  if (!doc) return message.error('获取知识库目录结构失败');
+  if (!doc) return message.error('文档获取失败');
 
-  const parser = new DOMParser();
-  const document = parser.parseFromString(doc.body_lake, 'text/html');
-  const children = document.body.children;
-
-  const toc = Array.from(children)
-    .filter(child => ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(child.nodeName))
-    .map(headNode => {
-      const [level] = headNode.nodeName.split('').reverse();
-      const prefix = '   '.repeat(Number(level) - 1);
-      const origin = 'https://www.yuque.com';
-      return `[${prefix}${headNode.textContent}](${origin}/${values!.namespace}/${doc.slug}#${headNode.id})<br/>`;
-    })
-    .join('');
-
-  await copyToClipboard(toc, '文档大纲');
+  const success = await store.set('html', { content: doc.body_lake });
+  if (success) {
+    chrome.runtime.sendMessage({ action: 'openMindMapPage' } as RequestOpenMindMapPage);
+  }
 }
 
-async function copyDocToc() {
+async function createMindMap() {
   const user = await store.get<{ id: number }>('user', ['id']);
   if (!user) return;
 
@@ -58,7 +46,7 @@ async function copyDocToc() {
 
   Modal.confirm({
     icon: null,
-    okText: '复制',
+    okText: '生成',
     onOk: onConfirm,
     cancelText: '取消',
     maskClosable: true,
@@ -101,4 +89,4 @@ async function copyDocToc() {
   });
 }
 
-export default copyDocToc;
+export default createMindMap;

@@ -19,10 +19,10 @@ export const Menu_Config: MenuConfig = {
   CopyBookToc: true,
   ViewMarkdown: true,
   InsertTooltip: true,
+  CreateMindMap: true,
   CreateShorthand: true,
   InsertBlankLine: true,
   InsertRandomImage: true,
-  CreateMindMapping: true,
   InsertSummaryInfo: true,
   PlayAmbienceSound: true
 };

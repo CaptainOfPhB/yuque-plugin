@@ -34,10 +34,10 @@ export enum Type {
   CopyBookToc = 'CopyBookToc',
   ViewMarkdown = 'ViewMarkdown',
   InsertTooltip = 'InsertTooltip',
+  CreateMindMap = 'CreateMindMap',
   CreateShorthand = 'CreateShorthand',
   InsertBlankLine = 'InsertBlankLine',
   InsertRandomImage = 'InsertRandomImage',
-  CreateMindMapping = 'CreateMindMapping',
   InsertSummaryInfo = 'InsertSummaryInfo',
   PlayAmbienceSound = 'PlayAmbienceSound'
 }
@@ -56,14 +56,14 @@ export enum TypeDescription {
   InsertBlankLine = '插入空行',
   CopyBookToc = '复制知识库大纲',
   InsertTooltip = '插入提示区块',
+  CreateMindMap = '生成思维导图',
   InsertRandomImage = '插入随机图片',
-  CreateMindMapping = '生成思维导图',
   InsertSummaryInfo = '插入统计信息',
   ViewMarkdown = '查看 Markdown 结构',
   PlayAmbienceSound = '播放环境声（白噪声）'
 }
 
-export type StoreKey = 'yuqueConfig' | 'basicConfig' | 'menuConfig' | 'user';
+export type StoreKey = 'yuqueConfig' | 'basicConfig' | 'menuConfig' | 'user' | 'html';
 
 export type YuqueConfig = Partial<{
   repoName: string;
@@ -88,6 +88,12 @@ export type BasicConfig = Partial<{
   readingSpeed: number;
 }>;
 
+export type User = UserSerializer;
+
+export interface Html {
+  content: string;
+}
+
 export type BasicFormFieldsValue = BasicConfig;
 
 export interface RequestCreateContextMenu {
@@ -97,6 +103,10 @@ export interface RequestCreateContextMenu {
 
 export interface RequestOpenOptionsPage {
   action: 'openOptionsPage';
+}
+
+export interface RequestOpenMindMapPage {
+  action: 'openMindMapPage';
 }
 
 export interface RequestFromBackgroundScript {

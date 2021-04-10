@@ -3,7 +3,7 @@
  * @return {boolean}
  */
 function isYuquePage() {
-  return Boolean(window.location.href.match('https://www.yuque.com'));
+  return Boolean(window.location.href.match('^https://www.yuque.com'));
 }
 
 export default isYuquePage;

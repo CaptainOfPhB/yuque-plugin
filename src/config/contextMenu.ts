@@ -17,7 +17,7 @@ const ContextMenu: MenuItem[] = [
   { type: Type.InsertTooltip, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.Separator },
   { type: Type.CreateShorthand, onlyRunOnYuquePage: true, contexts: ['all'] },
-  { type: Type.CreateMindMapping, onlyRunOnYuquePage: true, contexts: ['all'] },
+  { type: Type.CreateMindMap, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.Separator },
   { type: Type.PlayAmbienceSound, contexts: ['all'] }
 ];

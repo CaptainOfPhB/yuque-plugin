@@ -15,6 +15,7 @@ import insertSummaryInfo from '@/actions/insertSummaryInfo';
 import insertBlankLine from '@/actions/insertBlankLine';
 import createShorthand from '@/actions/createShorthand';
 import insertEmoji from '@/actions/insertEmoji';
+import createMindMap from '@/actions/createMindMap';
 
 chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
   request: RequestFromBackgroundScript,
@@ -60,6 +61,9 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       break;
     case Type.InsertEmoji:
       await insertEmoji();
+      break;
+    case Type.CreateMindMap:
+      await createMindMap();
       break;
     case Type.Setting:
       openOptionsPage();
