@@ -46,11 +46,22 @@ class ChromeStorage {
   async set(storeKey: StoreKey, values: Record<string, string | number | boolean>): Promise<boolean> {
     return new Promise(function (resolve) {
       try {
-        chrome.storage.sync.set({ [storeKey]: values });
-        resolve(true);
+        chrome.storage.sync.set({ [storeKey]: values }, () => resolve(true));
       } catch (e) {
         console.error(e);
         void message.error('插件配置保存失败');
+        resolve(false);
+      }
+    });
+  }
+
+  async remove(storeKey: StoreKey) {
+    return new Promise(function (resolve) {
+      try {
+        chrome.storage.sync.remove(storeKey, () => resolve(true));
+      } catch (e) {
+        console.error(e);
+        void message.error('数据清除失败');
         resolve(false);
       }
     });

@@ -31,7 +31,7 @@ async function onConfirm() {
   const doc = await getDocOfBookBy(values!.namespace, values!.slug);
   if (!doc) return message.error('文档获取失败');
 
-  const success = await store.set('html', { content: doc.body_lake });
+  const success = await store.set('html', { title: doc.title, content: doc.body_lake });
   if (success) {
     chrome.runtime.sendMessage({ action: 'openMindMapPage' } as RequestOpenMindMapPage);
   }

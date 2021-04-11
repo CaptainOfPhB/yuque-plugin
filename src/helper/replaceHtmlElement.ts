@@ -27,3 +27,25 @@ export const replacePElement = (document: Document) => {
     }
   });
 };
+
+export const normalizeOlElement = (document: Document) => {
+  const olElements = document.querySelectorAll('ol');
+  olElements.forEach(function (olElement: Element, index: number) {
+    if (index === 0) {
+      olElement.setAttribute('start', '1');
+    } else {
+      const prevOlElement = olElements[index - 1];
+      const listItemsLength = prevOlElement.querySelectorAll('li').length;
+      const start = listItemsLength + Number(prevOlElement.getAttribute('start')!);
+      olElement.setAttribute('start', start.toString());
+    }
+  });
+};
+
+export const insertH1Element = (document: Document, title: string) => {
+  const brElement = document.createElement('br');
+  const h1Element = document.createElement('h1');
+  h1Element.innerHTML = title;
+  document.body.prepend(brElement);
+  document.body.prepend(h1Element);
+};
