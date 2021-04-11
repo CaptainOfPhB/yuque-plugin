@@ -10,7 +10,7 @@ const ContextMenu: MenuItem[] = [
   { type: Type.ViewHTML, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.ViewMarkdown, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.Separator },
-  { type: Type.InsertEmoji, contexts: ['all'] },
+  { type: Type.InsertEmoji, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.InsertBlankLine, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.InsertRandomImage, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.InsertSummaryInfo, onlyRunOnYuquePage: true, contexts: ['all'] },
@@ -19,7 +19,7 @@ const ContextMenu: MenuItem[] = [
   { type: Type.CreateShorthand, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.CreateMindMap, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.Separator },
-  { type: Type.PlayAmbienceSound, contexts: ['all'] }
+  { type: Type.PlayAmbienceSound, onlyRunOnYuquePage: true, contexts: ['all'] }
 ];
 
 export default ContextMenu;

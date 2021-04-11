@@ -16,6 +16,7 @@ import insertBlankLine from '@/actions/insertBlankLine';
 import createShorthand from '@/actions/createShorthand';
 import insertEmoji from '@/actions/insertEmoji';
 import createMindMap from '@/actions/createMindMap';
+import playAmbienceSound from '@/actions/playAmbienceSound';
 
 chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
   request: RequestFromBackgroundScript,
@@ -64,6 +65,9 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       break;
     case Type.CreateMindMap:
       await createMindMap();
+      break;
+    case Type.PlayAmbienceSound:
+      await playAmbienceSound();
       break;
     case Type.Setting:
       openOptionsPage();

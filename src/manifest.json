@@ -24,7 +24,8 @@
       ],
       "run_at": "document_end",
       "css": [
-        "vendors/antd/antd.min.css"
+        "vendors/antd.min.css",
+        "player.css"
       ],
       "js": [
         "content_scripts.js"
@@ -36,7 +37,7 @@
       ],
       "run_at": "document_end",
       "css": [
-        "vendors/noty/noty.min.css"
+        "vendors/noty.min.css"
       ],
       "js": [
         "content_scripts.js"

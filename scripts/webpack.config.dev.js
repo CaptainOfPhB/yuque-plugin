@@ -21,6 +21,7 @@ const messages = `Build success, now you can follow the steps below:
 module.exports = {
   mode: 'development',
   entry: {
+    player: resolve('../src/player.less'),
     popup: resolve('../src/pages/popup/index.tsx'),
     options: resolve('../src/pages/options/index.tsx'),
     mindmap: resolve('../src/pages/mindmap/index.ts'),
@@ -105,7 +106,11 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin({
-      cleanStaleWebpackAssets: false
+      cleanStaleWebpackAssets: false,
+      cleanAfterEveryBuildPatterns: [
+        resolve('../dist/player.js'),
+        resolve('../dist/content_scripts.css'),
+      ]
     }),
     new HtmlWebpackPlugin({
       inject: true,
