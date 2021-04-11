@@ -2,7 +2,6 @@ import store from '@/store';
 import { message } from 'antd';
 import underEditing from '@/helper/underEditing';
 import randomLakeId from '@/helper/randomLakeId';
-import isArticlePage from '@/helper/isArticlePage';
 
 function createDivider() {
   const div = document.createElement('div');
@@ -47,9 +46,6 @@ function createParagraph(summary: string) {
 }
 
 async function insertSummaryInfo() {
-  if (!isArticlePage()) {
-    return message.error('该功能只可在文档页面使用');
-  }
   if (!underEditing()) {
     return message.error('该功能只可在编辑文档时使用');
   }

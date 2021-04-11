@@ -1,10 +1,9 @@
 /**
- * True if under editing on Yuque article page, or false
+ * True if under editing on Yuque doc page, or false
  * @return {boolean}
  */
 function underEditing() {
-  const dataValue = document.querySelector('.lark')?.getAttribute('data-testid');
-  return dataValue === 'lock-based-doc-editor';
+  return window.location.href.match('^https:\\/\\/www\\.yuque\\.com\\/.+\\/.+\\/.+\\edit$') !== null;
 }
 
 export default underEditing;

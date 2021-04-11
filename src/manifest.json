@@ -20,11 +20,23 @@
   "content_scripts": [
     {
       "matches": [
-        "<all_urls>"
+        "https://www.yuque.com/*"
       ],
       "run_at": "document_end",
       "css": [
         "vendors/antd/antd.min.css"
+      ],
+      "js": [
+        "content_scripts.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "vendors/noty/noty.min.css"
       ],
       "js": [
         "content_scripts.js"

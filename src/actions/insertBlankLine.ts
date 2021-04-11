@@ -1,7 +1,6 @@
 import { message } from 'antd';
 import underEditing from '@/helper/underEditing';
 import randomLakeId from '@/helper/randomLakeId';
-import isArticlePage from '@/helper/isArticlePage';
 
 function createParagraph() {
   const lakeId = randomLakeId(32);
@@ -12,9 +11,6 @@ function createParagraph() {
 }
 
 async function insertBlankLine() {
-  if (!isArticlePage()) {
-    return message.error('该功能只可在文档页面使用');
-  }
   if (!underEditing()) {
     return message.error('该功能只可在编辑文档时使用');
   }

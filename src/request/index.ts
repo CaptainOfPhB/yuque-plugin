@@ -18,15 +18,6 @@ axios.interceptors.request.use(async function (config: AxiosRequestConfig) {
   return config;
 });
 
-axios.interceptors.response.use(undefined, async function (error: AxiosError<ResponseWithError>) {
-  if (error.response!.status !== 200) {
-    const description = MessageMapping[error.response!.status] || '请打开控制台查看出错原因！';
-    notification.error({ message: 'Request Error:', description });
-    console.error((error.response!.data as ResponseWithError).message);
-  }
-  return Promise.reject(error);
-});
-
 const request = async <T>(option: AxiosRequestConfig | string) => {
   let loading = true;
 

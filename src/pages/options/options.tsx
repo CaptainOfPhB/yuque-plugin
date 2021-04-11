@@ -60,39 +60,37 @@ class Options extends React.Component<unknown, OptionsPageState> {
       case 'yuque':
         {
           const success1 = await store.set('yuqueConfig', values);
-          if (!success1) return message.success('语雀配置保存失败');
+          if (!success1) return this.settle(!success1);
 
           const user = await getUser();
           if (!user) {
-            const success = await store.set('yuqueConfig', this.state.yuqueConfig!);
-            return !success && message.error('语雀配置保存失败');
+            return this.settle(!(await store.set('yuqueConfig', this.state.yuqueConfig!)));
           }
 
           this.yuqueForm.current?.setFieldsValue({ userName: user.name });
 
           const success2 = await store.set('user', user);
-          if (!success2) return message.success('用户信息保存失败');
+          if (!success2) return this.settle(!success2);
 
-          const isSameUser = !this.state.user || this.state.user.id === user.id;
-          notification.success({
-            message: '保存成功！',
-            description: !isSameUser ? 'Access Token 所属用户与之前不一致，若您意为更改用户，请忽略此消息。' : undefined
-          });
+          this.settle(
+            success2,
+            this.state.user && this.state.user.id !== user.id
+              ? 'Access Token 所属用户与之前不一致，若您意为更改用户，请忽略此消息。'
+              : undefined
+          );
         }
         break;
       case 'basic':
-        {
-          const success = await store.set('basicConfig', values);
-          success ? notification.success({ message: '保存成功！' }) : void message.error('基础配置保存失败');
-        }
+        this.settle(await store.set('basicConfig', values));
         break;
       case 'menu':
-        {
-          const success = await store.set('menuConfig', values);
-          success ? notification.success({ message: '保存成功！' }) : void message.error('菜单配置保存失败');
-        }
+        this.settle(await store.set('menuConfig', values));
         break;
     }
+  };
+
+  settle = (success: boolean, description?: string) => {
+    success ? notification.success({ description, message: '配置保存成功' }) : void message.error('配置保存失败');
   };
 
   render() {
