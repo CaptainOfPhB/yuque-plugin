@@ -1,11 +1,11 @@
 import { YuqueConfig, BasicConfig, MenuConfig } from '@/interface';
 
 export const Yuque_Config: YuqueConfig = {
-  repoName: undefined,
   accessToken: undefined
 };
 
 export const Basic_Config: BasicConfig = {
+  musicSrc: 'rain',
   readingSpeed: 300
 };
 

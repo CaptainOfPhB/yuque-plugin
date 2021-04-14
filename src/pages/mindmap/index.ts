@@ -29,13 +29,18 @@ const turndownService = new TurndownService({ codeBlockStyle: 'fenced' })
   });
 
 void (async function init() {
-  const html = await store.get<{ content: string; title: string }>('html', ['content', 'title']);
-  if (!html) return message.error('文档内容不存在');
-  console.log(html);
+  let html = await store.get<{ content: string; title: string }>('html', ['content', 'title']);
+  if (!html) {
+    const cachedHtml = window.sessionStorage.getItem('html');
+    if (!cachedHtml) return message.error('文档内容不存在');
+    html = JSON.parse(cachedHtml) as { content: string; title: string };
+  } else {
+    window.sessionStorage.setItem('html', JSON.stringify(html));
+  }
   const virtualDocument = createDocument(html.title, html.content);
   const markdown = turndownService.turndown(virtualDocument.body);
-  console.log(markdown);
   createMindMap(markdown);
+  await store.remove('html');
 })();
 
 function createDocument(title: string, html: string) {
@@ -43,7 +48,6 @@ function createDocument(title: string, html: string) {
   replaceCardElement(document);
   replacePElement(document);
   normalizeOlElement(document);
-  // console.log(title);
   insertH1Element(document, title);
   return document;
 }

@@ -1,4 +1,18 @@
 import {
+  Row,
+  Col,
+  Card,
+  Form,
+  Input,
+  Button,
+  Checkbox,
+  Skeleton,
+  FormInstance,
+  notification,
+  message,
+  Select
+} from 'antd';
+import {
   Type,
   TypeDescription,
   UserSerializer,
@@ -11,9 +25,9 @@ import {
 } from '@/interface';
 import React from 'react';
 import store from '@/store';
+import music from '@/config/music';
 import { getUser } from '@/service';
 import { CheckOutlined } from '@ant-design/icons';
-import { Row, Col, Card, Form, Input, Button, Checkbox, Skeleton, FormInstance, notification, message } from 'antd';
 
 import './options.less';
 
@@ -144,11 +158,6 @@ class Options extends React.Component<unknown, OptionsPageState> {
         >
           <Row gutter={16}>
             <Col span={12}>
-              <Form.Item label='语雀知识库' name='repoName' normalize={(name: string) => name && name.trim()}>
-                <Input autoComplete='off' placeholder='请填写语雀知识库名称' />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
               <Form.Item
                 name='userName'
                 label='语雀用户名'
@@ -158,7 +167,7 @@ class Options extends React.Component<unknown, OptionsPageState> {
                 <Input disabled={true} autoComplete='off' placeholder='请填写语雀用户名' />
               </Form.Item>
             </Col>
-            <Col span={24}>
+            <Col span={12}>
               <Form.Item
                 required={true}
                 name='accessToken'
@@ -231,6 +240,17 @@ class Options extends React.Component<unknown, OptionsPageState> {
                 extra={<span style={{ fontSize: 11 }}>若有英文字体名，请置于中文字体名前</span>}
               >
                 <Input placeholder='请填写字体名，多个以英文逗号进行分隔' />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name='musicSrc' label='环境声'>
+                <Select placeholder='请选择你喜欢的环境声'>
+                  {music.map(m => (
+                    <Select.Option key={m.id} value={m.id}>
+                      {m.title}
+                    </Select.Option>
+                  ))}
+                </Select>
               </Form.Item>
             </Col>
           </Row>

@@ -1,3 +1,4 @@
+import './replaceFontFamily';
 import './messageListenerOfBackgroundScript';
 
 import isYuquePage from '@/helper/isYuquePage';

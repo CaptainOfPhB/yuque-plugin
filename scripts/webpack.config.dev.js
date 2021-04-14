@@ -21,7 +21,6 @@ const messages = `Build success, now you can follow the steps below:
 module.exports = {
   mode: 'development',
   entry: {
-    player: resolve('../src/player.less'),
     popup: resolve('../src/pages/popup/index.tsx'),
     options: resolve('../src/pages/options/index.tsx'),
     mindmap: resolve('../src/pages/mindmap/index.ts'),
@@ -108,7 +107,6 @@ module.exports = {
     new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,
       cleanAfterEveryBuildPatterns: [
-        resolve('../dist/player.js'),
         resolve('../dist/content_scripts.css'),
       ]
     }),
@@ -146,6 +144,7 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         { from: resolve('../src/manifest.json'), to: resolve('../dist'), toType: 'dir' },
+        { from: resolve('../src/player.css'), to: resolve('../dist'), toType: 'dir' },
         { from: resolve('../src/images'), to: resolve('../dist/images'), toType: 'dir' },
         { from: resolve('../src/vendors'), to: resolve('../dist/vendors'), toType: 'dir' }
       ]

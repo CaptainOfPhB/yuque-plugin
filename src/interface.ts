@@ -66,7 +66,6 @@ export enum TypeDescription {
 export type StoreKey = 'yuqueConfig' | 'basicConfig' | 'menuConfig' | 'user' | 'html';
 
 export type YuqueConfig = Partial<{
-  repoName: string;
   accessToken: string;
 }>;
 
@@ -84,6 +83,7 @@ export type MenuConfig = Omit<
 export type MenuFormFieldsValue = MenuConfig;
 
 export type BasicConfig = Partial<{
+  musicSrc: string;
   fontFamily: string;
   readingSpeed: number;
 }>;

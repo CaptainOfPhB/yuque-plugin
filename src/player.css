@@ -1,0 +1,26 @@
+.yuque-plugin__player-container {
+  z-index: 20;
+  width: 32px;
+  height: 32px;
+  position: fixed;
+  right: 24px;
+  bottom: 145px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.yuque-plugin__player-button {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transform: scale(0.7);
+  background-image: url("./images/play.png");
+  background-repeat: no-repeat;
+  background-position-x: 1px;
+  background-size: contain;
+}
+
+.yuque-plugin__player-paused {
+  background-image: url("./images/pause.png");
+}
