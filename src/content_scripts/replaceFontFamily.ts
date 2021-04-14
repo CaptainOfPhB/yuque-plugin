@@ -1,6 +1,8 @@
 import store from '@/store';
+import isYuquePage from '@/helper/isYuquePage';
 
 void (async function replaceFontFamily() {
+  if (!isYuquePage()) return;
   const config = await store.get<{ fontFamily: string }>('basicConfig', undefined, ['fontFamily']);
   if (!config || !config.fontFamily) return;
   replace(config.fontFamily);
