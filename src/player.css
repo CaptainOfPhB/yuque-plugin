@@ -15,12 +15,12 @@
   height: 100%;
   cursor: pointer;
   transform: scale(0.7);
-  background-image: url("./images/play.png");
+  background-image: url("https://cdn.nlark.com/yuque/0/2021/png/128628/1618737819373-e14f4eb7-49a6-45a7-b2bb-c210f4330bcb.png");
   background-repeat: no-repeat;
   background-position-x: 1px;
   background-size: contain;
 }
 
 .yuque-plugin__player-paused {
-  background-image: url("./images/pause.png");
+  background-image: url("https://cdn.nlark.com/yuque/0/2021/png/128628/1618737819355-e31c2e94-a182-4eea-a6ea-da76190f3f61.png");
 }
