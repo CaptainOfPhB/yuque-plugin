@@ -12,7 +12,6 @@ const ContextMenu: MenuItem[] = [
   { type: Type.Separator },
   { type: Type.InsertRandomImage, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.InsertSummaryInfo, onlyRunOnYuquePage: true, contexts: ['all'] },
-  { type: Type.InsertTooltip, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.Separator },
   { type: Type.CreateShorthand, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.CreateMindMap, onlyRunOnYuquePage: true, contexts: ['all'] },

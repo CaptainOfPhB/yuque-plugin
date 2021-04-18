@@ -10,7 +10,6 @@ import viewHTML from '@/actions/viewHTML';
 import viewMarkdown from '@/actions/viewMarkdown';
 import insertRandomImage from '@/actions/insertRandomImage';
 import openOptionsPage from '@/actions/openOptionsPage';
-import insertTooltip from '@/actions/insertTooltip';
 import insertSummaryInfo from '@/actions/insertSummaryInfo';
 import createShorthand from '@/actions/createShorthand';
 import createMindMap from '@/actions/createMindMap';
@@ -48,9 +47,6 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       break;
     case Type.InsertSummaryInfo:
       await insertSummaryInfo();
-      break;
-    case Type.InsertTooltip:
-      insertTooltip();
       break;
     case Type.CreateShorthand:
       await createShorthand();

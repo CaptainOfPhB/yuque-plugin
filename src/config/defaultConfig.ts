@@ -17,7 +17,6 @@ export const Menu_Config: MenuConfig = {
   CopyDocToc: true,
   CopyBookToc: true,
   ViewMarkdown: true,
-  InsertTooltip: true,
   CreateMindMap: true,
   CreateShorthand: true,
   InsertRandomImage: true,
