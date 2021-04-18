@@ -15,7 +15,6 @@ export const Menu_Config: MenuConfig = {
   ViewHTML: true,
   CopyLink: true,
   CopyDocToc: true,
-  InsertEmoji: true,
   CopyBookToc: true,
   ViewMarkdown: true,
   InsertTooltip: true,
