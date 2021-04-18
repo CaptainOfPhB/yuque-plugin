@@ -35,7 +35,6 @@ export enum Type {
   InsertTooltip = 'InsertTooltip',
   CreateMindMap = 'CreateMindMap',
   CreateShorthand = 'CreateShorthand',
-  InsertBlankLine = 'InsertBlankLine',
   InsertRandomImage = 'InsertRandomImage',
   InsertSummaryInfo = 'InsertSummaryInfo',
   PlayAmbienceSound = 'PlayAmbienceSound'
@@ -51,7 +50,6 @@ export enum TypeDescription {
   CopyDocToc = '复制文档大纲',
   ViewHTML = '查看 HTML 结构',
   CreateShorthand = '生成速记',
-  InsertBlankLine = '插入空行',
   CopyBookToc = '复制知识库大纲',
   InsertTooltip = '插入提示区块',
   CreateMindMap = '生成思维导图',

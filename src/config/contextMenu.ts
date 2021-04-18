@@ -10,7 +10,6 @@ const ContextMenu: MenuItem[] = [
   { type: Type.ViewHTML, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.ViewMarkdown, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.Separator },
-  { type: Type.InsertBlankLine, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.InsertRandomImage, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.InsertSummaryInfo, onlyRunOnYuquePage: true, contexts: ['all'] },
   { type: Type.InsertTooltip, onlyRunOnYuquePage: true, contexts: ['all'] },

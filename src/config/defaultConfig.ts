@@ -20,7 +20,6 @@ export const Menu_Config: MenuConfig = {
   InsertTooltip: true,
   CreateMindMap: true,
   CreateShorthand: true,
-  InsertBlankLine: true,
   InsertRandomImage: true,
   InsertSummaryInfo: true,
   PlayAmbienceSound: true

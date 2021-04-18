@@ -12,7 +12,6 @@ import insertRandomImage from '@/actions/insertRandomImage';
 import openOptionsPage from '@/actions/openOptionsPage';
 import insertTooltip from '@/actions/insertTooltip';
 import insertSummaryInfo from '@/actions/insertSummaryInfo';
-import insertBlankLine from '@/actions/insertBlankLine';
 import createShorthand from '@/actions/createShorthand';
 import createMindMap from '@/actions/createMindMap';
 import playAmbienceSound from '@/actions/playAmbienceSound';
@@ -49,9 +48,6 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       break;
     case Type.InsertSummaryInfo:
       await insertSummaryInfo();
-      break;
-    case Type.InsertBlankLine:
-      await insertBlankLine();
       break;
     case Type.InsertTooltip:
       insertTooltip();
