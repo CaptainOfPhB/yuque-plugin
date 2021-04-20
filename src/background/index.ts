@@ -1,4 +1,8 @@
-import './openOptionsPage';
-import './openMindMapPage';
-import './createContextMenu';
-import './setYuqueConfiguration';
+try {
+  require('./openOptionsPage');
+  require('./openMindMapPage');
+  require('./createContextMenu');
+  require('./setYuqueConfiguration');
+} catch (e) {
+  console.error(e);
+}
