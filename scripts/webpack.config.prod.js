@@ -1,4 +1,5 @@
 const path = require('path');
+const ZipPlugin = require('zip-webpack-plugin');
 const EslintPlugin = require('eslint-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -138,6 +139,10 @@ module.exports = {
         { from: resolve('../src/images'), to: resolve('../build/images'), toType: 'dir' },
         { from: resolve('../src/vendors'), to: resolve('../build/vendors'), toType: 'dir' }
       ]
+    }),
+    new ZipPlugin({
+      path: resolve('../'),
+      filename: 'yuque-plugin.zip'
     })
   ]
 };
