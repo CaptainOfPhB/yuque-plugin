@@ -1,8 +1,9 @@
 const path = require('path');
 const chalk = require('chalk');
 const EslintPlugin = require('eslint-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const tsImportPluginFactory = require('ts-import-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
@@ -42,7 +43,18 @@ module.exports = {
           {
             loader: 'ts-loader',
             options: {
-              configFile: resolve('../tsconfig.json')
+              configFile: resolve('../tsconfig.json'),
+              transpileOnly: true,
+              compilerOptions: {
+                module: 'es2015'
+              },
+              getCustomTransformers: () => ({
+                before: [tsImportPluginFactory({
+                  style: true,
+                  libraryName: 'antd',
+                  libraryDirectory: 'lib'
+                })]
+              })
             }
           }
         ]
@@ -107,7 +119,7 @@ module.exports = {
     new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,
       cleanAfterEveryBuildPatterns: [
-        resolve('../dist/content_scripts.css'),
+        resolve('../dist/content_scripts.css')
       ]
     }),
     new HtmlWebpackPlugin({
