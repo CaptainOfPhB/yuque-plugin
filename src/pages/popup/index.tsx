@@ -1,20 +1,17 @@
 import React from 'react';
+import { ConfigProvider } from 'antd';
+import * as ReactDOM from 'react-dom';
+import zh_CN from 'antd/lib/locale-provider/zh_CN';
 
 import './popup.less';
+import Popup from './popup';
 
-function Popup() {
+function App() {
   return (
-    <div className='yuque-plugin__popup-container'>
-      <div className='yuque-plugin__setting'>
-        <div className='yuque-plugin__icon-wrapper'>
-          <span>设置</span>
-        </div>
-        <div className='yuque-plugin__icon-wrapper'>
-          <span>反馈</span>
-        </div>
-      </div>
-    </div>
+    <ConfigProvider locale={zh_CN}>
+      <Popup />
+    </ConfigProvider>
   );
 }
 
-export default Popup;
+ReactDOM.render(<App />, document.getElementById('root'));

@@ -14,6 +14,7 @@ import insertSummaryInfo from '@/actions/insertSummaryInfo';
 import createShorthand from '@/actions/createShorthand';
 import createMindMap from '@/actions/createMindMap';
 import playAmbienceSound from '@/actions/playAmbienceSound';
+import openHelpPage from '@/actions/openHelpPage';
 
 chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
   request: RequestFromBackgroundScript,
@@ -59,6 +60,9 @@ chrome.runtime.onMessage.addListener(async function handleContextMenuClick(
       break;
     case Type.Setting:
       openOptionsPage();
+      break;
+    case Type.Help:
+      openHelpPage();
       break;
   }
 

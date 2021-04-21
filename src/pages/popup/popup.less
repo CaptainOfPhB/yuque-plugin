@@ -1,62 +1,50 @@
-.yuque-plugin__popup-container {
-  padding: 10px 10px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #333;
-  font-size: 12px;
-  user-select: none;
-}
+@prefix: ~'yuque-plugin__';
 
-.yuque-plugin__setting {
-  width: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.yuque-plugin__icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-
-  & span {
-    padding-left: 3px;
-  }
-}
-
-.yuque-plugin__icon-setting {
-  width: 14px;
-  cursor: pointer;
-}
-
-.yuque-plugin__icon-feedback {
-  width: 12px;
-  height: 12px;
-  cursor: pointer;
-}
-
-.yuque-plugin__menu-item {
-  margin: 10px 0;
-  padding: 0 10px;
-  height: 35px;
-  width: 150px;
-  cursor: pointer;
-  line-height: 35px;
-  border-radius: 2px;
-  background-color: #f1f1f1;
-  box-shadow: 0 0 2px #f1f1f2;
-
-  &.disabled {
-    color: #aaa;
-    cursor: not-allowed;
-    background-color: #f9f9f9;
+.@{prefix} {
+  &popup-container {
+    width: 200px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    color: #333;
+    user-select: none;
   }
 
-  &:not(.disabled):hover {
-    color: #25b864;
-    outline: 1px solid #25b864;
+  &title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 30px;
+    padding-bottom: 5px;
+
+    & img {
+      width: 32px;
+      height: 32px;
+      margin-right: 10px;
+    }
+
+    & span {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+
+  &slug {
+    font-style: italic;
+    padding-bottom: 30px;
+  }
+
+  &copyright {
+    color: #666;
+    font-size: 11px;
+    text-align: center;
+    padding-bottom: 10px;
+
+    & span {
+      color: #25b864;
+      cursor: pointer;
+      text-decoration: underline;
+    }
   }
 }

@@ -99,6 +99,10 @@ export interface RequestOpenOptionsPage {
   action: 'openOptionsPage';
 }
 
+export interface RequestOpenGitHubPage {
+  action: 'openGitHubPage';
+}
+
 export interface RequestOpenMindMapPage {
   action: 'openMindMapPage';
 }

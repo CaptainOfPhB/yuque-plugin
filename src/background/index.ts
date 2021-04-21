@@ -1,4 +1,5 @@
 try {
+  require('./openGitHubPage');
   require('./openOptionsPage');
   require('./openMindMapPage');
   require('./createContextMenu');
