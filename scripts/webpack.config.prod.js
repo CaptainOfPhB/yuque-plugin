@@ -99,7 +99,6 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin({
-      cleanStaleWebpackAssets: false,
       cleanAfterEveryBuildPatterns: [
         resolve('../build/content_scripts.css')
       ]
