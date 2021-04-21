@@ -14,3 +14,6 @@ yarn-error.log
 # dist
 dist
 build
+
+# zip
+yuque-plugin.zip
