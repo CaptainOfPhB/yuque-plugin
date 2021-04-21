@@ -5,7 +5,7 @@
   "description": "A Chrome extension that make Yuque more powerful",
   "scripts": {
     "start": "webpack --config scripts/webpack.config.dev.js",
-    "build": "rm -rf build && webpack --config scripts/webpack.config.prod.js",
+    "build": "webpack --config scripts/webpack.config.prod.js",
     "lint": "eslint --fix src --ext .ts,.tsx"
   },
   "husky": {
