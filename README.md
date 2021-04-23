@@ -6,7 +6,7 @@ English | [中文](./README.zh_CN.md)
 
 [Chrome store](https://chrome.google.com/webstore/category/extensions)
 or [Edge store](https://microsoftedge.microsoft.com/addons/Microsoft-Edge-Extensions-Home) or manually
-via [.crx](https://github.com/CaptainOfPhB/yuque-plugin/releases).
+via [.zip](https://github.com/CaptainOfPhB/yuque-plugin/releases).
 
 After installation, the first thing you should do is configure the plugin.
 
